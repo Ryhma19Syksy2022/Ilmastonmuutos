@@ -10,7 +10,7 @@ const V1Annual = () => {
       .get("/api/v1annual")
       .then((response) => {
         setannualData(response.data);
-      })
+      console.log(response.data)})
       .catch((error) => {
         //status(500).send(error.message)
       });
