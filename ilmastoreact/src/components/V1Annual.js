@@ -1,15 +1,18 @@
 import { React, useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import axios from "axios";
+import { Chart } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 import "chart.js/auto";
+import axios from "axios";
+Chart.register(zoomPlugin);
 
 const V1Annual = () => {
-  const [annualData, setannualData] = useState([]);
+  const [annualData, setAnnualData] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/v1annual")
+      .get("/api/charts/v1")
       .then((response) => {
-        setannualData(response.data);
+        setAnnualData(response.data);
       console.log(response.data)})
       .catch((error) => {
         //status(500).send(error.message)
@@ -20,7 +23,7 @@ const V1Annual = () => {
     <div>
       <Line
         data={{
-          labels: annualData.map((a) => a.time),
+          labels: annualData.slice(0,172).map((a) => a.time),
           datasets: [
             {
               label: "Global Anomaly (deg c)",
@@ -32,27 +35,9 @@ const V1Annual = () => {
               fill: false,
               tension: 0,
               type: "line",
-              data: annualData.map((a) => a.globalAnomaly),
+              data: annualData.map((a) => a.globalAnnual),
             },
-            {
-              label: "Global Lower confidence limit (2.5%)",
-              backgroundColor: "rgb(249, 62, 110, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.globalLcl),
-            },
-            {
-              label: "Global Upper confidence limit (97.5%)",
-              backgroundColor: "rgb(249, 62, 110, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.globalUcl),
-            },
-            {
+             {
               label: "Northern Anomaly (deg c)",
               backgroundColor: "rgb(16, 131, 167)",
               borderColor: "rgb(16, 131, 167)",
@@ -60,25 +45,7 @@ const V1Annual = () => {
               fill: false,
               tension: 0,
               type: "line",
-              data: annualData.map((a) => a.northernAnomaly),
-            },
-            {
-              label: "Northern Lower confidence limit (2.5%)",
-              backgroundColor: "rgb(16, 131, 167, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.northernLcl),
-            },
-            {
-              label: "Northern Upper confidence limit (97.5%)",
-              backgroundColor: "rgb(16, 131, 167, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.northernUcl),
+              data: annualData.map((a) => a.northernAnnual),
             },
             {
               label: "Southern Anomaly (deg c)",
@@ -88,27 +55,31 @@ const V1Annual = () => {
               fill: false,
               tension: 0,
               type: "line",
-              data: annualData.map((a) => a.southernAnomaly),
-            },
-            {
-              label: "Southern Lower confidence limit (2.5%)",
-              backgroundColor: "rgb(247, 186, 8, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.southernLcl),
-            },
-            {
-              label: "Southern Upper confidence limit (97.5%)",
-              backgroundColor: "rgb(247, 186, 8, 0.2)",
-              borderColor: "transparent",
-              pointRadius: 0,
-              fill: 0,
-              tension: 0,
-              data: annualData.map((a) => a.southernUcl),
-            },
+              data: annualData.map((a) => a.southernAnnual),
+            }
           ],
+        }}
+        options={{
+          pointRadius:0,
+          plugins: {
+            zoom: {
+              limits: {
+                x: { min: "original", max: "original" },
+                y: { min: "original", max: "original" },
+              },
+              pan: {
+                enabled: true,
+                mode: "xy",
+              },
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                mode: "xy",
+                speed: 20,
+              },
+            },
+          },
         }}
       />
     </div>
