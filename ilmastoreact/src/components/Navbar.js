@@ -25,7 +25,7 @@ export default function Navbar(){
         </li>
       </ul>
       <form class="Login">
-        <button class="btn btn-outline-success" type="submit">Sign in</button>
+        <Link classname="nav-link" to="/LogIn">Sign in</Link>
       </form>
     </div>
     <div>
