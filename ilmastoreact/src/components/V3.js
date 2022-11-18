@@ -27,7 +27,9 @@ const V3 = () => {
             //status(500).send(error.message)
         });
         }, []);
-    const [graphState, updateState] = useState(true);
+        console.log(annualData)
+
+        const [graphState, updateState] = useState(true);
 
     function showAnnual() {
     updateState(true);
@@ -41,6 +43,10 @@ const V3 = () => {
         <><button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button><div>
             {graphState && <Line
                 options={{
+                     parsing: {
+                         xAxisKey: "time",
+                         yAxisKey: "value"
+                    },
                     scales: {
                         xAxis: {
                             title: {
@@ -57,19 +63,22 @@ const V3 = () => {
                     }
                 }}
                 data={{
-                    labels: annualData.map((a) => a.time),
+                    //labels: annualData.map((a) => a.time),
                     datasets: [
+                        // {
+                        //     data: annualData,
+                        // },
                         {
-                            label: "Mauna Loa CO2 concentration",
-                            backgroundColor: "rgb(249, 62, 110)",
-                            borderColor: "rgb(249, 62, 110)",
+                            label: "DSS Ice core CO2",
+                            backgroundColor: "rgb(22, 112, 22)",
+                            borderColor: "rgb(22, 112, 22)",
                             borderWidth: 2,
                             hoverBorderColor: "yellow",
                             hoverBorderWidth: 2,
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.meanAnnual)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DSS"}),
                         },
                         {
                             label: "DE08 Ice core CO2",
@@ -81,9 +90,9 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.de08)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DE08"}),
                         },
-                        {
+                         {
                             label: "DE08-2 Ice core CO2",
                             backgroundColor: "rgb(52, 64, 235)",
                             borderColor: "rgb(52, 64, 235)",
@@ -93,19 +102,19 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.de082)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DE08-2"}),
                         },
                         {
-                            label: "DSS Ice core CO2",
-                            backgroundColor: "rgb(22, 112, 22)",
-                            borderColor: "rgb(22, 112, 22)",
+                            label: "Mauna Loa CO2 concentration",
+                            backgroundColor: "rgb(249, 62, 110)",
+                            borderColor: "rgb(249, 62, 110)",
                             borderWidth: 2,
                             hoverBorderColor: "yellow",
                             hoverBorderWidth: 2,
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.dss)
+                            data: annualData.filter((a) => {return a.dataset_id === "v3-annual"}),
                         },
                     ]
                 }} />}
@@ -139,7 +148,7 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: monthlyData.map((a) => a.meanMonthly)
+                            data: monthlyData.map((a) => a.value)
                         },
                     ]
                 }} />}
