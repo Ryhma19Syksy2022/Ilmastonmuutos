@@ -21,6 +21,9 @@ export default function Navbar(){
    <Link className="nav-link" to="/v2">V2Annual</Link>
         </li>
         <li class="nav-item">
+   <Link className="nav-link" to="/v3">V3</Link>
+        </li>
+        <li class="nav-item">
    <Link className="nav-link" to="/profile">Profile</Link>
         </li>
       </ul>
