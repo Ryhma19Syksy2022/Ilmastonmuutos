@@ -1,11 +1,14 @@
-import { React, useState, useEffect } from "react";
-import {Doughnut} from 'react-chartjs-2';
+import { React, useState, useEffect} from "react";
+import {Doughnut, } from 'react-chartjs-2';
 import axios from "axios";
 import "chart.js/auto";
 
 
 const V9Sectors = () => {
 const [sectorData,setsectorData] = useState([]);
+const [graphState, updateState] = useState(true);
+
+
 useEffect(() => {
     axios
     .get("/api/v9sectors")
@@ -17,11 +20,19 @@ useEffect(() => {
         });
 },[]);
 
+function showSector() {
+updateState(true);
+}
 
+function showSubSector() {
+updateState(false);
+}        
 
     return (
         <div>
-          <Doughnut
+          {graphState &&<Doughnut
+          options ={{onClick: showSubSector,}
+              }
             data={{
               labels: sectorData.slice(0,4).map((c) => c.sectors),
               datasets: [
@@ -37,13 +48,13 @@ useEffect(() => {
                   type: "doughnut",
                   radius: '40%',
                   borderAlign: 'inner',
-                  data: sectorData.slice(0,4).map((c) => c.co2),
-                  
+                  data: sectorData.slice(0,4).map((c) => c.co2),                
                 },
             ],
             }}
-          />
-          <Doughnut
+          /> }
+          {!graphState && <Doughnut
+          options={{onClick: showSector}}
           data={{
             labels: sectorData.slice(5,21).map((c) => c.subSectors),
             datasets: [
@@ -62,8 +73,9 @@ useEffect(() => {
                 data: sectorData.slice(5,21).map((c) => c.co2),
               },
           ],
-          }}/>
-                  </div>                
+          }}/>}
+          
+                  </div>               
       );
     };
     export default V9Sectors;
