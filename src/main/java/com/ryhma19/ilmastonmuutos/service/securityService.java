@@ -74,7 +74,7 @@ public class securityService {
             DecodedJWT jwt = verifier.verify(jwtToken);
             return jwt.getSubject();
         } catch (JWTVerificationException e) {
-            // TODO: handle exception
+            
         }
 
         return null;

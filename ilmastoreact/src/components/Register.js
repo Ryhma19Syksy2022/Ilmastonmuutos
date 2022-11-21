@@ -1,23 +1,21 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useState } from "react";
 
-
-export default function Login(){
+export default function Register(){
 
     const [uname, setuname] = useState("");
     const [pw, setpw] = useState("");
     
   
-    const newLogin = async (e) =>{
+    const newRegister = async (e) =>{
         e.preventDefault();
         const formData = new FormData();
             formData.append('uname', uname);
             formData.append('pw', pw);
 
         try {
-            const result = await axios.post('/api/login', formData)
+            const result = await axios.post('/api/register', formData)
             console.log(result);
         } catch (error) {
             console.error(error);
@@ -25,18 +23,17 @@ export default function Login(){
 
         
     }
+        
+    
 
     return(
-        
         <body>
-            <h3>LogIn To website</h3>
+            <h3>Register a new user account To website</h3>
 
-
-
-            <form onSubmit={newLogin} class="was-validated">
+            <form onSubmit={newRegister} class="was-validated">
                 <div class="mb-3 mt-3">
                     <label for="username" class="form-label">Username:</label>
-                    <input type="username" class="form-control" id="username" placeholder="Enter username" name="username" value={uname} onChange={(e) => setuname(e.target.value)} required/>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" value={uname} onChange={(e) => setuname(e.target.value)} required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
@@ -46,10 +43,7 @@ export default function Login(){
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <div class="form-check mb-3">
-                    <Link classname="nav-link" to="/Register">a New User?</Link>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Register Account</button>
             </form>
 
         </body>

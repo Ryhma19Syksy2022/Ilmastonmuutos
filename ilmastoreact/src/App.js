@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Profile from './components/Profile';
 import Login from './components/LogIn';
 import V9Sectors from './components/V9Sectors';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/v2' element={<V9Sectors/>}></Route>
         <Route path='/profile' element={<Profile/>}></Route>
         <Route path='/Login' element={<Login/>}></Route>
+        <Route path='/Register' element={<Register/>}></Route>
       </Routes>
     </div>
     <Footer/>
