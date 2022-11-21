@@ -1,9 +1,6 @@
-import { React, useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import zoomPlugin from "chartjs-plugin-zoom";
-import Chart from "chart.js/auto";
 import axios from "axios";
-Chart.register(zoomPlugin);
 
 const V1V2=()=> {
   const [globalAnnual, setGlobalAnnual] = useState([]);
@@ -58,8 +55,9 @@ const V1V2=()=> {
   }, []);
 
   const dataAnnual = {
-    datasets: [{
-        label: "v2",
+    datasets: [
+      {
+        label: "2,000-Year Northern Hemisphere Temperature Reconstruction",
         backgroundColor: "rgb(0,0,0)",
         borderColor: "rgb(0,0,0)",
         fill: false,
@@ -91,8 +89,9 @@ const V1V2=()=> {
   };
 
   const dataMonthly = {
-    datasets: [{
-      label: "v2",
+    datasets: [
+      {
+        label: "2,000-Year Northern Hemisphere Temperature Reconstruction",
       backgroundColor: "rgb(0,0,0)",
       borderColor: "rgb(0,0,0)",
       fill: false,
@@ -170,25 +169,8 @@ const V1V2=()=> {
           boxHeight: 2,
           boxWidth: 10,
         },
-      },
-      // zoom: {
-      //   limits: {
-      //     x: { min: "original", max: "original" },
-      //     y: { min: "original", max: "original" },
-      //   },
-      //   pan: {
-      //     enabled: true,
-      //     mode: "xy",
-      //   },
-      //   zoom: {
-      //     wheel: {
-      //       enabled: true,
-      //     },
-      //     mode: "xy",
-      //     speed: 20,
-      //   },
-      // },
-    },
+      }
+    }
   };
 
   const [graphState, updateState] = useState(true);
@@ -207,10 +189,37 @@ const V1V2=()=> {
       <div>
       <button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button>
       </div>
-      <div>
+      <div style={{ width: "1000px", height: "500px" }}>
       {graphState && <Line data={dataAnnual} options={options}></Line>}
       {!graphState && <Line data={dataMonthly} options={options}></Line>}
-      {/* /* <Line data={dataMonthly} options={options}></Line> */}
+      </div>
+      <hr/>
+      <div>
+        <p>
+        Temperatures from January 1850 onwards as global and regional average time series.
+        </p>
+        <p>
+          Northern Hemisphere temperature reconstruction for the past 2,000
+          years by combining low-resolution proxies with tree-ring data, using a
+          wavelet transform technique to achieve timescale-dependent processing
+          of the data.
+        </p>
+      </div>
+      <div>
+        <p>Links:</p>
+        <p><a href="https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt">
+          2,000-Year Northern Hemisphere Temperature Reconstruction </a></p>
+        <p>
+          <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">
+            Global historical surface temperature anomalies from January 1850
+            onwards
+          </a>
+        </p>
+        <p>
+          <a href="https://gml.noaa.gov/ccgg/about/co2_measurements.html">
+            Data measurement description
+          </a>
+        </p>
         </div>
         </>
   );
