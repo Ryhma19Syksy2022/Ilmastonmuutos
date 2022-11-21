@@ -10,12 +10,15 @@ const V6 = () => {
     async function getV6Data() {
       const results = await axios.get("/api/charts/v6");
       setV6(results.data);
-      console.log(results.data);
     }
     getV6Data();
   }, []);
 
+  let roundYear = v6.map((data) => Math.round(parseFloat(data.time))).reverse();
+  let fixedYear = roundYear.map((value) => (value - 1950) * -1);
+
   const data = {
+    labels: fixedYear,
     datasets: [
       {
         label: "Composite CO2 record",
@@ -26,53 +29,75 @@ const V6 = () => {
         tension: 0,
         type: "line",
         pointRadius: 0,
-        data: [...v6].reverse(),
+        data: v6.map((data) => data.value).reverse(),
       },
     ],
   };
 
-    const options = {
-        parsing: {
-            xAxisKey: "time",
-            yAxisKey: "value",
+  const options = {
+    // parsing: {
+    //     xAxisKey: "time",
+    //     yAxisKey: "value",
+    // },
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      y: {
+        title: {
+          display: true,
+          align: "end",
+          text: "co2 (ppm)",
         },
-        maintainAspectRatio: false,
-        responsive: true,
-        scales: {
-            y: {
-              title: {
-                display: true,
-                align: "end",
-                text: "co2 (ppm)",
-              },
-            },
-            x: {
-                title: {
-                display: true,
-                align: "end",
-                text: "year",
-              }
-
-            },
-          },
-        plugins: {
-            legend: {
-                labels: {
-                    boxHeight: 2,
-                    boxWidth: 10,
-                },
-            },
-            title: {
-                display: true,
-                text: 'Antarctic Ice Cores Revised 800KYr CO2 Data'
-            },
-        }
-    }
+      },
+      x: {
+        title: {
+          display: true,
+          align: "end",
+          text: "year",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          boxHeight: 2,
+          boxWidth: 10,
+        },
+      },
+      title: {
+        display: true,
+        text: "Antarctic Ice Cores Revised 800KYr CO2 Data",
+      },
+    },
+  };
 
   return (
-    <div style={{ width: "1000px"  ,height:"500px"}}>
-      <Line data={data} options={options} />
-    </div>
+    <>
+      <div style={{ width: "1000px", height: "500px" }}>
+        <Line data={data} options={options} />
+      </div>
+      <hr />
+      <div>
+        <p>
+          Atmospheric CO2 concentrations for the last 800,000 years.{" "}
+          <p>
+            Earliest Year: 805669 cal yr BP (-803719 CE)
+            <p>Most Recent Year: -51 cal yr BP (2001 CE)</p>
+          </p>
+        </p>
+      </div>
+      <div>
+        <p>Links:</p>
+        <p>
+          <a href="https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt">
+            Datasource
+          </a>
+        </p>
+        <p>
+          <a href="http://ncdc.noaa.gov/paleo/study/17975">Description</a>
+        </p>
+      </div>
+    </>
   );
 };
 
