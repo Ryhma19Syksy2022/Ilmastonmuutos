@@ -1,8 +1,8 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 
-const V1V2=()=> {
+const V1V2 = () => {
   const [globalAnnual, setGlobalAnnual] = useState([]);
   const [globalMonthly, setGlobalMonthly] = useState([]);
   const [northernAnnual, setNorthernAnnual] = useState([]);
@@ -19,7 +19,7 @@ const V1V2=()=> {
       "/api/charts/v1-northern-monthly",
       "/api/charts/v1-southern-annual",
       "/api/charts/v1-southern-monthly",
-      "api/charts/v2"
+      "api/charts/v2",
     ];
     Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
       ([
@@ -29,7 +29,7 @@ const V1V2=()=> {
         { data: northernMonthly },
         { data: southernAnnual },
         { data: southernMonthly },
-        {data: v2}
+        { data: v2 },
       ]) => {
         console.log({
           globalAnnual,
@@ -45,7 +45,7 @@ const V1V2=()=> {
         setNorthernMonthly(northernMonthly);
         setSouthernAnnual(southernAnnual);
         setSouthernMonthly(southernMonthly);
-        setV2(v2)
+        setV2(v2);
       }
     );
   };
@@ -83,8 +83,7 @@ const V1V2=()=> {
         borderColor: "rgb(247, 186, 8)",
         fill: false,
         data: [...southernAnnual],
-      }
-
+      },
     ],
   };
 
@@ -92,43 +91,40 @@ const V1V2=()=> {
     datasets: [
       {
         label: "2,000-Year Northern Hemisphere Temperature Reconstruction",
-      backgroundColor: "rgb(0,0,0)",
-      borderColor: "rgb(0,0,0)",
-      fill: false,
-      data: [...v2],
-    },
-    {
-      label: "Global monthly",
-      backgroundColor: "rgb(249, 62, 110)",
-      borderColor: "rgb(249, 62, 110)",
-      fill: false,
-      data: [...globalMonthly],
-    },
-    {
-      label: "Northern monthly",
-      backgroundColor: "rgb(16, 131, 167)",
-      borderColor: "rgb(16, 131, 167)",
-      fill: false,
-      data: [...northernMonthly],
-    },
-    {
-      label: "Southern monthly",
-      backgroundColor: "rgb(247, 186, 8)",
-      borderColor: "rgb(247, 186, 8)",
-      fill: false,
-      data: [...southernMonthly],
-    }
-
-  ],
-  }
+        backgroundColor: "rgb(0,0,0)",
+        borderColor: "rgb(0,0,0)",
+        fill: false,
+        data: [...v2],
+      },
+      {
+        label: "Global monthly",
+        backgroundColor: "rgb(249, 62, 110)",
+        borderColor: "rgb(249, 62, 110)",
+        fill: false,
+        data: [...globalMonthly],
+      },
+      {
+        label: "Northern monthly",
+        backgroundColor: "rgb(16, 131, 167)",
+        borderColor: "rgb(16, 131, 167)",
+        fill: false,
+        data: [...northernMonthly],
+      },
+      {
+        label: "Southern monthly",
+        backgroundColor: "rgb(247, 186, 8)",
+        borderColor: "rgb(247, 186, 8)",
+        fill: false,
+        data: [...southernMonthly],
+      },
+    ],
+  };
 
   const options = {
     parsing: {
       xAxisKey: "time",
       yAxisKey: "value",
     },
-    tension: 0,
-    type: "line",
     interaction: {
       mode: "index",
       intersect: false,
@@ -169,34 +165,34 @@ const V1V2=()=> {
           boxHeight: 2,
           boxWidth: 10,
         },
-      }
-    }
+      },
+    },
   };
 
   const [graphState, updateState] = useState(true);
 
   function showAnnual() {
-  updateState(true);
+    updateState(true);
   }
 
   function showMonthly() {
-  updateState(false);
-
-
+    updateState(false);
   }
   return (
     <>
       <div>
-      <button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button>
+        <button onClick={showAnnual}>Annual</button>
+        <button onClick={showMonthly}>Monthly</button>
       </div>
       <div style={{ width: "1000px", height: "500px" }}>
-      {graphState && <Line data={dataAnnual} options={options}></Line>}
-      {!graphState && <Line data={dataMonthly} options={options}></Line>}
+        {graphState && <Line data={dataAnnual} options={options}></Line>}
+        {!graphState && <Line data={dataMonthly} options={options}></Line>}
       </div>
-      <hr/>
+      <hr />
       <div>
         <p>
-        Temperatures from January 1850 onwards as global and regional average time series.
+          Temperatures from January 1850 onwards as global and regional average
+          time series.
         </p>
         <p>
           Northern Hemisphere temperature reconstruction for the past 2,000
@@ -207,8 +203,11 @@ const V1V2=()=> {
       </div>
       <div>
         <p>Links:</p>
-        <p><a href="https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt">
-          2,000-Year Northern Hemisphere Temperature Reconstruction </a></p>
+        <p>
+          <a href="https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt">
+            2,000-Year Northern Hemisphere Temperature Reconstruction{" "}
+          </a>
+        </p>
         <p>
           <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">
             Global historical surface temperature anomalies from January 1850
@@ -220,9 +219,9 @@ const V1V2=()=> {
             Data measurement description
           </a>
         </p>
-        </div>
-        </>
+      </div>
+    </>
   );
-}
+};
 
 export default V1V2;

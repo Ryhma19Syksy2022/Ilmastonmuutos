@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
-import Chart from "chart.js";
 
 const V6 = () => {
   const [v6, setV6] = useState([]);
@@ -78,19 +77,15 @@ const V6 = () => {
       </div>
       <hr />
       <div>
-        <p>
-          Atmospheric CO2 concentrations for the last 800,000 years.{" "}
-          <p>
-            Earliest Year: 805669 cal yr BP (-803719 CE)
-            <p>Most Recent Year: -51 cal yr BP (2001 CE)</p>
-          </p>
-        </p>
+        <p>Atmospheric CO2 concentrations for the last 800,000 years.</p>
+        <p>Earliest Year: 805669 cal yr BP (-803719 CE) </p>
+        <p>Most Recent Year: -51 cal yr BP (2001 CE)</p>
       </div>
       <div>
         <p>Links:</p>
         <p>
           <a href="https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt">
-            Datasource
+            Data source
           </a>
         </p>
         <p>

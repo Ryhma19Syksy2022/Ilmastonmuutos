@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ryhma19.ilmastonmuutos.data.V1;
-import com.ryhma19.ilmastonmuutos.dto.V1AnnualDTO;
-import com.ryhma19.ilmastonmuutos.dto.V1MonthlyDTO;
 import com.ryhma19.ilmastonmuutos.service.V1Service;
 
 @RestController
@@ -27,7 +25,7 @@ public class V1Controller {
 
     // @GetMapping("/charts/v1/1")
     // public List<V1AnnualDTO> getAnnualData() {
-    //     return v1Service.getAnnualData();
+    // return v1Service.getAnnualData();
     // }
 
     @GetMapping("charts/{datasetId}")
@@ -35,6 +33,11 @@ public class V1Controller {
 
         return v1Service.getDataset(datasetId);
 
+    }
+
+    @GetMapping(value = "charts/v7/all")
+    public List<V1> getV7Data() {
+        return v1Service.getV7Data();
     }
 
     // @GetMapping("/charts/v1/2")
