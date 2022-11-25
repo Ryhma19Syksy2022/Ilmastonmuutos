@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ryhma19.ilmastonmuutos.data.V8;
-import com.ryhma19.ilmastonmuutos.repository.V8Repository;
+import com.ryhma19.ilmastonmuutos.service.V8Service;
 
 @RestController
 @RequestMapping("/api")
 public class V8Controller {
 
     @Autowired
-    V8Repository v8Repository;
+    V8Service v8Service;
 
-    @GetMapping("v8")
+    @GetMapping("charts/v8")
     public List<V8>getAllData(){
-        return v8Repository.findAll();
+        return v8Service.getAllData();
     }
-    
+
 }
