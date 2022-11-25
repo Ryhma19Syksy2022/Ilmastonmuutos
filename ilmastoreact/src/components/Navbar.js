@@ -15,13 +15,16 @@ export default function Navbar(){
    <Link className="nav-link" to="/">Home</Link>
         </li>
         <li class="nav-item">
-   <Link className="nav-link" to="/v1">V1Annual</Link>
+   <Link className="nav-link" to="/v1">V1V2</Link>
         </li>
         <li class="nav-item">
    <Link className="nav-link" to="/v6">V6</Link>
         </li>
         <li class="nav-item">
    <Link className="nav-link" to="/v7">V7</Link>
+        </li>
+        <li class="nav-item">
+   <Link className="nav-link" to="/v8">V8</Link>
         </li>
         <li class="nav-item">
    <Link className="nav-link" to="/v3">V3</Link>

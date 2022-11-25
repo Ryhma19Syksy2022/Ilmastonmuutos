@@ -9,54 +9,44 @@ import javax.persistence.Table;
 public class V8 {
 
     @Id
-    private int id;
-    private int time;
-    private double afghanistan;
-    private double albania;
-    private double algeria;
-    
-
+    private Long id;
+    private Double value;
+    private Integer time;
+    private String country;
 
     public V8() {
     }
 
-    public int getId() {
-        return this.id;
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getTime() {
-        return this.time;
+    public Double getValue() {
+        return value;
     }
 
-    public void setTime(int time) {
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
         this.time = time;
     }
 
-    public double getAfghanistan() {
-        return this.afghanistan;
+    public String getCountry() {
+        return country;
     }
 
-    public void setAfghanistan(double afghanistan) {
-        this.afghanistan = afghanistan;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public double getAlbania() {
-        return this.albania;
-    }
-
-    public void setAlbania(double albania) {
-        this.albania = albania;
-    }
-
-    public double getAlgeria() {
-        return this.algeria;
-    }
-
- 
-    
-    
 }
