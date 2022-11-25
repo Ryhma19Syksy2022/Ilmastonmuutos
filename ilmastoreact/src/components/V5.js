@@ -17,17 +17,17 @@ const V5 = () => {
         });
     }, []);
 
-    function testButton(event, array) {
-        if (array[0]) {
-            console.log("test")
-        }
-    }
-
     return (
+        <><div>V5 Vostok Ice Core CO2 measurements</div>
         <div>
             <Line
                 options={{
-                    onClick: testButton,
+                    datasets: {
+                        line: {
+                            pointRadius: 0,
+                            pointHitRadius: 8,
+                        },
+                    },
                     scales: {
                         xAxis: {
                             reverse: true,
@@ -66,9 +66,8 @@ const V5 = () => {
                             data: chartData.map((a) => a.value),
                         }
                     ]
-                }}
-            />
-        </div>
+                }} />
+        </div></>
     )
 };
 export default V5;

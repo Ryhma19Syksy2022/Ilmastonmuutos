@@ -3,14 +3,17 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import "chart.js/auto";
 
+
 const V3 = () => {
     const [annualData, setannualData] = useState([]);
+    const [yearData, setYears] = useState([]);
     useEffect(() => {
         axios
         .get("/api/charts/v3/1")
         .then((response) => {
             setannualData(response.data);
-        console.log(response.data)})
+            setYears(getYears(response.data[0].time, response.data[response.data.length - 1].time))
+            console.log(response.data)})
         .catch((error) => {
             //status(500).send(error.message)
         });
@@ -27,7 +30,6 @@ const V3 = () => {
             //status(500).send(error.message)
         });
         }, []);
-        console.log(annualData)
 
         const [graphState, updateState] = useState(true);
 
@@ -38,11 +40,25 @@ const V3 = () => {
     function showMonthly() {
     updateState(false);
     }
+    
+    function getYears(startYear, endYear) {
+    const years = [];
+    for (var i = startYear; i <= endYear; i++) {
+        years.push(String(i));
+        }
+    return years;
+    }
 
     return (
-        <><button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button><div>
+        <>{graphState && <div>V3 annual Mauna Loa measurements combined with V4 ice core measurements</div>}{!graphState && <div>V3 monthly Mauna Loa measurements</div>}<button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button><div>
             {graphState && <Line
                 options={{
+                    datasets: {
+                        line: {
+                            pointRadius: 0,
+                            pointHitRadius: 8,
+                        }
+                    },
                      parsing: {
                          xAxisKey: "time",
                          yAxisKey: "value"
@@ -63,11 +79,8 @@ const V3 = () => {
                     }
                 }}
                 data={{
-                    //labels: annualData.map((a) => a.time),
+                    labels: yearData,
                     datasets: [
-                        // {
-                        //     data: annualData,
-                        // },
                         {
                             label: "DSS Ice core CO2",
                             backgroundColor: "rgb(22, 112, 22)",
@@ -120,6 +133,12 @@ const V3 = () => {
                 }} />}
                 {!graphState && <Line
                 options={{
+                    datasets: {
+                        line: {
+                            pointRadius: 0,
+                            pointHitRadius: 8,
+                        }
+                    },
                     scales: {
                         xAxis: {
                             title: {
