@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ryhma19.ilmastonmuutos.data.V9Sectors;
-import com.ryhma19.ilmastonmuutos.repository.V9SectorRepository;
+import com.ryhma19.ilmastonmuutos.data.V9;
+import com.ryhma19.ilmastonmuutos.repository.V9Repository;
 
 
 
 @RestController
 @RequestMapping("/api")
-public class V9SectorController {
+public class V9Controller {
 
 @Autowired
-V9SectorRepository v9SectorRepository;  
+V9Repository v9SectorRepository;  
 
 @GetMapping("v9sectors")
-public List<V9Sectors>getAllData(){
+public List<V9>getAllData(){
     return v9SectorRepository.findAll();
 }
     

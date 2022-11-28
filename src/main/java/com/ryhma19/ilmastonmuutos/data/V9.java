@@ -9,14 +9,14 @@ import javax.persistence.Table;
 @Table(name = "sector")
 
 
-public class V9Sectors {
+public class V9 {
     @Id
     private int id;
     private double co2;
     private String sectors;
     private String subSectors;
 
-    public V9Sectors() {
+    public V9() {
     }
 
     public int getId() {
