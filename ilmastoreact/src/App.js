@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import Login from "./components/LogIn";
 import V3 from "./components/V3";
+import V5 from './components/V5';
 import V6 from "./components/V6";
 import V7 from "./components/V7";
 import V8 from "./components/V8";
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/v1" element={<V1V2 />}></Route>
           <Route path="/v3" element={<V3 />}></Route>
+          <Route path='/v5' element={<V5/>}></Route>
           <Route path="/v6" element={<V6 />}></Route>
           <Route path="/v7" element={<V7 />}></Route>
           <Route path="/v8" element={<V8 />}></Route>

@@ -31,4 +31,5 @@ public class V3Controller {
     public List<V3> getMonthlyData() {
         return v3Repository.getMonthlyData();
     }
+
 }

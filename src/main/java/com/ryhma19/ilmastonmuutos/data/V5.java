@@ -7,7 +7,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "v1tov7")
 
-public class V3 {
+public class V5 {
     @Id
     private int id;
     private Double value;
@@ -47,5 +47,4 @@ public class V3 {
         this.dataset_id = dataset_id;
     }
 
-    
 }
