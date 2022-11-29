@@ -23,7 +23,7 @@ const sectorsData = {
       {
         label: "sectors",
         backgroundColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
-        borderColor: ["rgb(50, 62, 110)","rgb(100,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
+        borderColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
         borderWidth: 2,
         hoverBorderColor: "yellow",
         hoverBorderWidth: 2,
@@ -43,7 +43,7 @@ const subSectorsData = {
         {
             label: "subSectors",
             backgroundColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
-            borderColor: ["rgb(50, 62, 110)","rgb(100,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
+            borderColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
             borderWidth: 2,
             hoverBorderColor: "yellow",
             hoverBorderWidth:2,
