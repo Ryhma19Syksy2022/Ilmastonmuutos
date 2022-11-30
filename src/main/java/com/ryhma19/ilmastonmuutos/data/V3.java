@@ -12,7 +12,7 @@ public class V3 {
     private int id;
     private Double value;
     private String time;
-    private String dataset_id;
+    private String datasetId;
 
 
     public int getId() {
@@ -39,13 +39,12 @@ public class V3 {
         this.time = time;
     }
 
-    public String getDataset_id() {
-        return this.dataset_id;
+    public String getDatasetId() {
+        return this.datasetId;
     }
 
-    public void setDataset_id(String dataset_id) {
-        this.dataset_id = dataset_id;
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
     }
 
-    
 }
