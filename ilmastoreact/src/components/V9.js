@@ -70,7 +70,7 @@ function showSubSector(event,array) {
 
 return (
   <>
-  <div>
+  <div style={{ width: "auto" }}>
     {graphState && <Doughnut data={sectorsData} options={{onClick:showSubSector}}></Doughnut>}
     {!graphState && <Doughnut data={subSectorsData} options={{onClick:showSector}}></Doughnut>}
   </div>

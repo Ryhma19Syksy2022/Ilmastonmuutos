@@ -184,7 +184,7 @@ const V1V2 = () => {
         <button onClick={showAnnual}>Annual</button>
         <button onClick={showMonthly}>Monthly</button>
       </div>
-      <div style={{ width: "1000px", height: "500px" }}>
+      <div style={{ width:"auto", height: "500px" }}>
         {graphState && <Line data={dataAnnual} options={options}></Line>}
         {!graphState && <Line data={dataMonthly} options={options}></Line>}
       </div>
