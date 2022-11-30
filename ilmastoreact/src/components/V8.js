@@ -90,7 +90,7 @@ const V8 = () => {
 
   return (
     <>
-      <div style={{ width: "1000px", height: "1000px" }}>
+      <div style={{ width: "auto", height: "1000px" }}>
         <Line data={dataObj} options={options}></Line>
           </div>
           <hr style={{ width: "1000px" }} />
