@@ -3,14 +3,17 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import "chart.js/auto";
 
+
 const V3 = () => {
     const [annualData, setannualData] = useState([]);
+    const [yearData, setYears] = useState([]);
     useEffect(() => {
         axios
         .get("/api/charts/v3/1")
         .then((response) => {
             setannualData(response.data);
-        console.log(response.data)})
+            setYears(getYears(response.data[0].time, response.data[response.data.length - 1].time))
+            console.log(response.data)})
         .catch((error) => {
             //status(500).send(error.message)
         });
@@ -27,7 +30,8 @@ const V3 = () => {
             //status(500).send(error.message)
         });
         }, []);
-    const [graphState, updateState] = useState(true);
+
+        const [graphState, updateState] = useState(true);
 
     function showAnnual() {
     updateState(true);
@@ -36,11 +40,29 @@ const V3 = () => {
     function showMonthly() {
     updateState(false);
     }
+    
+    function getYears(startYear, endYear) {
+    const years = [];
+    for (var i = startYear; i <= endYear; i++) {
+        years.push(String(i));
+        }
+    return years;
+    }
 
     return (
-        <><button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button><div>
+        <>{graphState && <div>V3 annual Mauna Loa measurements combined with V4 ice core measurements</div>}{!graphState && <div>V3 monthly Mauna Loa measurements</div>}<button onClick={showAnnual}>Annual</button><button onClick={showMonthly}>Monthly</button><div>
             {graphState && <Line
                 options={{
+                    datasets: {
+                        line: {
+                            pointRadius: 0,
+                            pointHitRadius: 8,
+                        }
+                    },
+                     parsing: {
+                         xAxisKey: "time",
+                         yAxisKey: "value"
+                    },
                     scales: {
                         xAxis: {
                             title: {
@@ -57,19 +79,19 @@ const V3 = () => {
                     }
                 }}
                 data={{
-                    labels: annualData.map((a) => a.time),
+                    labels: yearData,
                     datasets: [
                         {
-                            label: "Mauna Loa CO2 concentration",
-                            backgroundColor: "rgb(249, 62, 110)",
-                            borderColor: "rgb(249, 62, 110)",
+                            label: "DSS Ice core CO2",
+                            backgroundColor: "rgb(22, 112, 22)",
+                            borderColor: "rgb(22, 112, 22)",
                             borderWidth: 2,
                             hoverBorderColor: "yellow",
                             hoverBorderWidth: 2,
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.meanAnnual)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DSS"}),
                         },
                         {
                             label: "DE08 Ice core CO2",
@@ -81,9 +103,9 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.de08)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DE08"}),
                         },
-                        {
+                         {
                             label: "DE08-2 Ice core CO2",
                             backgroundColor: "rgb(52, 64, 235)",
                             borderColor: "rgb(52, 64, 235)",
@@ -93,24 +115,30 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.de082)
+                            data: annualData.filter((a) => {return a.dataset_id === "v4-DE08-2"}),
                         },
                         {
-                            label: "DSS Ice core CO2",
-                            backgroundColor: "rgb(22, 112, 22)",
-                            borderColor: "rgb(22, 112, 22)",
+                            label: "Mauna Loa CO2 concentration",
+                            backgroundColor: "rgb(249, 62, 110)",
+                            borderColor: "rgb(249, 62, 110)",
                             borderWidth: 2,
                             hoverBorderColor: "yellow",
                             hoverBorderWidth: 2,
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: annualData.map((a) => a.dss)
+                            data: annualData.filter((a) => {return a.dataset_id === "v3-annual"}),
                         },
                     ]
                 }} />}
                 {!graphState && <Line
                 options={{
+                    datasets: {
+                        line: {
+                            pointRadius: 0,
+                            pointHitRadius: 8,
+                        }
+                    },
                     scales: {
                         xAxis: {
                             title: {
@@ -139,7 +167,7 @@ const V3 = () => {
                             fill: false,
                             tension: 0,
                             type: "line",
-                            data: monthlyData.map((a) => a.meanMonthly)
+                            data: monthlyData.map((a) => a.value)
                         },
                     ]
                 }} />}
