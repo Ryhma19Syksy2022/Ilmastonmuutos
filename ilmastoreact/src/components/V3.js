@@ -6,27 +6,31 @@ import "chart.js/auto";
 
 
 const V3 = () => {
+    const chartRef = useRef(null);
     const [annualData, setannualData] = useState([]);
+    const [dssData, setdssData] = useState([]);
+    const [de08Data, setde08Data] = useState([]);
+    const [de082Data, setde082Data] = useState([]);
+    const [monthlyData, setmonthlyData] = useState([]);
     const [v10Data, setV10Data] = useState([]);
 
     useEffect(() => {
         axios.get("/api/charts/v3").then((response) => {
-            setannualData(response.data);
-            console.log(response.data)
+            setannualData(response.data.filter((a) => { return a.datasetId === "v3-annual" }));
+            setdssData(response.data.filter((a) => { return a.datasetId === "v4-DSS" }));
+            setde08Data(response.data.filter((a) => { return a.datasetId === "v4-DE08" }));
+            setde082Data(response.data.filter((a) => { return a.datasetId === "v4-DE08-2" }));
+            setmonthlyData(response.data.filter((a) => { return a.datasetId === "v3-monthly" }));
         });
     }, []);
 
     useEffect(() => {
         axios.get("/api/charts/v10").then((response) => {
             setV10Data(response.data);
-            console.log(response.data)
         });
     }, []);
 
-    const chartRef = useRef(null);
-
     const chart = chartRef.current;
-
 
     function findValueAt(x) {
         let year = 2022 - x.time;
@@ -88,6 +92,7 @@ const V3 = () => {
             }
         }
     }
+
     const data = {
         datasets: [
             {
@@ -99,7 +104,7 @@ const V3 = () => {
                 fill: false,
                 tension: 0,
                 type: "line",
-                data: annualData.filter((a) => { return a.datasetId === "v4-DSS" })
+                data: dssData
             },
             {
                 label: "DE08 Ice core CO2",
@@ -110,7 +115,7 @@ const V3 = () => {
                 fill: false,
                 tension: 0,
                 type: "line",
-                data: annualData.filter((a) => { return a.datasetId === "v4-DE08" })
+                data: de08Data
             },
             {
                 label: "DE08-2 Ice core CO2",
@@ -121,7 +126,7 @@ const V3 = () => {
                 fill: false,
                 tension: 0,
                 type: "line",
-                data: annualData.filter((a) => { return a.datasetId === "v4-DE08-2" })
+                data: de082Data
             },
             {
                 label: "Mauna Loa Annual CO2 concentration",
@@ -132,7 +137,7 @@ const V3 = () => {
                 fill: false,
                 tension: 0,
                 type: "line",
-                data: annualData.filter((a) => { return a.datasetId === "v3-annual" })
+                data: annualData
             },
             {
                 label: "V10",
@@ -161,12 +166,50 @@ const V3 = () => {
                 fill: false,
                 tension: 0,
                 type: "line",
-                data: annualData.filter((a) => { return a.datasetId === "v3-monthly" }),
+                data: monthlyData,
             },
         ]
 
     }
 
-    return (<Line ref={chartRef} options={options} data={data} />);
+    return (
+    <>
+    <Line ref={chartRef} options={options} data={data} />
+    <hr />
+    <div>
+        <p>
+            The graph shows CO2 measured in the atmosphere at the Hawaii Mauna Loa Observatory, combined with the CO2 records from the three ice cores obtained at Law Dome, East Antarctica.
+        </p>
+        <p>
+            The red dots are major human evolution and culture events with most of them being related to CO2 and temperatures.
+        </p>
+        <p>Links:</p>
+        <p>
+          <a href="https://gml.noaa.gov/ccgg/trends/data.html">
+            V3 data source
+          </a>
+        </p>
+        <p>
+          <a href="https://gml.noaa.gov/ccgg/about/co2_measurements.html">
+            V3 data measurement description
+          </a>
+        </p>
+        <p>
+          <a href="https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat">
+            V4 data source
+          </a>
+        </p>
+        <p>
+          <a href="https://cdiac.ess-dive.lbl.gov/trends/co2/lawdome.html">
+            V4 data measurement description
+          </a>
+        </p>
+        <p>
+          <a href="https://www.southampton.ac.uk/~cpd/history.html">
+            V10 data source
+          </a>
+        </p>
+    </div>
+    </>);
 };
-export default V3;
+export default V3;  

@@ -28,7 +28,7 @@ public class V3Controller {
     @Autowired
     V10Repository v10Repository;
 
-    @GetMapping("charts/v10")
+    @GetMapping("/charts/v10")
     public List<V10> getV10Data() {
         return v10Repository.findAll();
     }

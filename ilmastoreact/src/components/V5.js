@@ -77,6 +77,26 @@ const V5 = () => {
         ]
     }
 
-    return ( <Line options={options} data={data} /> )
+    return ( 
+    <>
+    <Line options={options} data={data} />
+    <hr />
+    <div>
+            <p>
+                The graph shows the CO2 measured from the Vostok ice core
+            </p>
+            <p>Links:</p>
+            <p>
+                <a href="https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2">
+                    V5 data source
+                </a>
+            </p>
+            <p>
+                <a href="https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html">
+                    V5 data measurement description
+                </a>
+            </p>
+        </div>
+        </>)
 };
 export default V5;
