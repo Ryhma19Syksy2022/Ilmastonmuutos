@@ -7,6 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/main/java/com/ryhma19/ilmastonmuutos/controller/V5Controller.java
+import com.ryhma19.ilmastonmuutos.data.V5;
+import com.ryhma19.ilmastonmuutos.repository.V5Repository;
+
+@RestController
+@RequestMapping("/api")
+public class V5Controller {
+    
+    @Autowired
+    V5Repository v5Repository;
+
+    @GetMapping("/charts/v5")
+    public List<V5> getAllData() {
+        return v5Repository.getV5Data();
+========
+>>>>>>> proju/main
 import com.ryhma19.ilmastonmuutos.data.V8;
 import com.ryhma19.ilmastonmuutos.service.V8Service;
 
@@ -20,6 +38,12 @@ public class V8Controller {
     @GetMapping("charts/v8")
     public List<V8>getAllData(){
         return v8Service.getAllData();
+<<<<<<< HEAD
     }
 
 }
+=======
+>>>>>>>> proju/main:src/main/java/com/ryhma19/ilmastonmuutos/controller/V8Controller.java
+    }
+}
+>>>>>>> proju/main
