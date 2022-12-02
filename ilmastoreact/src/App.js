@@ -1,14 +1,14 @@
 import './App.css';
 import { Routes , Route} from 'react-router-dom';
 import { useState } from 'react';
-import V1Annual from './components/V1Annual';
+import N1 from "./components/N1";
+import N2 from "./components/N2";
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import Footer from './components/Footer';
 import Profile from './components/Profile';
 import Login from './components/LogIn';
-import V9Sectors from './components/V9Sectors';
 import Register from './components/Register';
+
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
     </>
 
   if(userJwt != null) {
-    authRoutes = <Route path='/profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+    authRoutes = <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
   } 
 
   return (
@@ -30,14 +30,16 @@ function App() {
     <Navbar userLoggedIn={userJwt != null}/>
     <div className="App">
       <Routes>
-      <Route path='/' element={<Home/>}></Route>
-      <Route path='/v1' element={<V1Annual/>}></Route>
-      <Route path='/v2' element={<V9Sectors/>}></Route>
+      <Route path='/' element={<Home />}></Route>
+      <Route path="/N1" element={<N1 />}>
+        <Route path=":vId" ></Route>
+      </Route>
+      <Route path="/N2" element={<N2 />}>
+        <Route path=":vId" ></Route>
+      </Route>
         { authRoutes}
-        
       </Routes>
     </div>
-    <Footer/>
     </>
   );
 }

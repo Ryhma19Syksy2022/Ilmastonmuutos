@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom';
 
 export default function Navbar(props){
 
+  const [privateData, setprivateData] = useState([]);
+
   try {
 
-    const [privateData, setprivateData] = useState([]);
 
     const config = {
         headers:{'Authorization': `Bearer ${props.token}`},withCredentials: true}
@@ -32,19 +33,21 @@ export default function Navbar(props){
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-   <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link" to="/">Home</Link>
         </li>
         <li class="nav-item">
-   <Link className="nav-link" to="/v1">V1Annual</Link>
-        </li> 
-        <li class="nav-item">
-   <Link className="nav-link" to="/v2">V2Annual</Link>
+          <Link className="nav-link" to="/N1">Temperature and Co<sub>2</sub> </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/N2">Co<sub>2</sub> emissions</Link>
         </li>
         
       </ul>
-      <form class="Login">
-        {props.userLoggedIn ? <Link className="nav-link" to="/profile">profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
-      </form>
+      <div class="LoginDiv">
+        
+        {props.userLoggedIn ? <Link className="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
+        
+      </div>
     </div>
     <div>
     </div>
