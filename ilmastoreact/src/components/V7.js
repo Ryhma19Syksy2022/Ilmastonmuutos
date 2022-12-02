@@ -104,10 +104,10 @@ const V7 = () => {
 
   return (
     <>
-      <div style={{ width: "auto", height: "500px" }}>
+      <div style={{ width: "auto", height: "650px" }}>
         <Line data={data} options={options} />
       </div>
-      <hr style={{ width: "1000px" }} />
+      <hr style={{ width: "auto" }} />
       <div>
         <p>
           The temperature record from the available 2m year period in

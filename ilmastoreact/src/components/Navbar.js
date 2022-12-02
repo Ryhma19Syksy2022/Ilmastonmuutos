@@ -16,6 +16,7 @@ export default function Navbar(){
         </li>
         <li className="nav-item">
    <Link className="nav-link" to="/N1">Temperature and Co<sub>2</sub> </Link>
+   
         </li>
         <li className="nav-item">
    <Link className="nav-link" to="/N2">Co<sub>2</sub> emissions</Link>
