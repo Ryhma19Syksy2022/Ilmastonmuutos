@@ -43,7 +43,7 @@ export default function Navbar(props){
         </li>
         
       </ul>
-      <div class="LoginDiv">
+      <div classname="Login">
         
         {props.userLoggedIn ? <Link className="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
         

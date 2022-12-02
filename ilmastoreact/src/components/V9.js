@@ -42,8 +42,8 @@ const subSectorsData = {
     datasets:[
         {
             label: "subSectors",
-            backgroundColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
-            borderColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)"],
+            backgroundColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)","rgb(1,14,143)","rgb(256,233,1)","rgb(15,1,66)","rgb(66,144,5)","rgb(22,99,155)","rgb(13,64,92)","rgb(255,44,0)","rgb(222,55,111)","rgb(111,44,77)","rgb(88,44,99)","rgb(99,44,222)","rgb(77,77,222)",],
+            borderColor: ["rgb(50, 62, 110)","rgb(10,50,200)","rgb(12,150,0)","rgb(144,5,256)","rgb(1,14,143)","rgb(256,233,1)","rgb(15,1,66)","rgb(66,144,5)","rgb(22,99,155)","rgb(13,64,92)","rgb(255,44,0)","rgb(222,55,111)","rgb(111,44,77)","rgb(88,44,99)","rgb(99,44,222)","rgb(77,77,222)",],
             borderWidth: 2,
             hoverBorderColor: "yellow",
             hoverBorderWidth:2,
@@ -71,6 +71,7 @@ function showSubSector(event,array) {
 return (
   <>
   <div style={{ width: "auto" }}>
+    <p>By clicking the chart you can see further breakdown of the emissions of sectors</p>
     {graphState && <Doughnut data={sectorsData} options={{onClick:showSubSector}}></Doughnut>}
     {!graphState && <Doughnut data={subSectorsData} options={{onClick:showSector}}></Doughnut>}
   </div>
