@@ -1,13 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useState } from "react";
 
 
-export default function Login(){
+export default function Login(props){
 
     const [uname, setuname] = useState("");
     const [pw, setpw] = useState("");
+    const navigate = useNavigate();
     
   
     const newLogin = async (e) =>{
@@ -18,7 +19,12 @@ export default function Login(){
 
         try {
             const result = await axios.post('/api/login', formData)
+            console.log('logging in')                          
             console.log(result);
+            const receivedJWT = (result.data);
+            props.login(receivedJWT);
+
+            navigate('/profile', {replace: true});
         } catch (error) {
             console.error(error);
         }

@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Register(){
 
     const [uname, setuname] = useState("");
     const [pw, setpw] = useState("");
+    const navigate = useNavigate();
     
   
     const newRegister = async (e) =>{
@@ -17,6 +19,7 @@ export default function Register(){
         try {
             const result = await axios.post('/api/register', formData)
             console.log(result);
+            navigate('/Login', {replace: true});
         } catch (error) {
             console.error(error);
         }
