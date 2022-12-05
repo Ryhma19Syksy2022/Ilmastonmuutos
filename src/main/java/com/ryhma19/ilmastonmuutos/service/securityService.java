@@ -1,5 +1,7 @@
 package com.ryhma19.ilmastonmuutos.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -79,4 +81,24 @@ public class securityService {
 
         return null;
     }
+
+    /**
+     * 
+     * @param uname
+     * @param pw
+     * @return
+     */
+
+
+    public user deactivate(String uname, String pw){
+
+        user u = repo.findById(uname).orElse(null);
+
+        if(u != null && myEncoder.matches(pw, u.password) ){
+            repo.deleteById(uname);
+            return null;
+        }
+
+        return null;
+    }  
 }
