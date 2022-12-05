@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "sector")
+@Table(name = "v9")
 
 
 public class V9 {
