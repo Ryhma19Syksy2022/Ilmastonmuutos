@@ -3,6 +3,7 @@ package com.ryhma19.ilmastonmuutos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -43,10 +44,16 @@ public class securityController {
             String token = bearer.split(" ")[1];
             String username = secService.validateJwt(token);
             if(username!=null){
-                return new ResponseEntity<>("Private data for "+username, HttpStatus.OK);
+                return new ResponseEntity<>(username, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @PostMapping("deactivate")
+    public ResponseEntity<String> deactivate(@RequestParam String uname, @RequestParam String pw){
+        user u = secService.deactivate(uname, pw);
+        return new ResponseEntity<>("account has been deactivated", HttpStatus.OK);
     }
     
 }

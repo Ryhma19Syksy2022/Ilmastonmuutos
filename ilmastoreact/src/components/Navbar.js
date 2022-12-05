@@ -30,7 +30,7 @@ export default function Navbar(props){
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div className="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
           <Link className="nav-link" to="/">Home</Link>
@@ -45,7 +45,7 @@ export default function Navbar(props){
       </ul>
       <div classname="Login">
         
-        {props.userLoggedIn ? <Link className="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
+        {props.userLoggedIn ? <Link classname="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
         
       </div>
     </div>
