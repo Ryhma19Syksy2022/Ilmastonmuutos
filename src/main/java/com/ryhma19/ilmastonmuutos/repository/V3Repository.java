@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.ryhma19.ilmastonmuutos.data.V3;
 
 public interface V3Repository extends JpaRepository<V3, Integer> {
-    @Query(value = "SELECT * FROM v3_v4 WHERE mean_monthly IS NULL ORDER BY time", nativeQuery = true)
+    @Query(value = "SELECT * FROM v1tov7 WHERE dataset_id LIKE \"%v3%\" OR dataset_id LIKE \"%v4%\" ORDER BY `time` asc", nativeQuery = true)
     public List<V3> getAnnualData();
 
-    @Query(value = "SELECT * FROM v3_v4 WHERE mean_monthly IS NOT NULL ORDER BY time", nativeQuery = true)
-    public List<V3> getMonthlyData();
 }

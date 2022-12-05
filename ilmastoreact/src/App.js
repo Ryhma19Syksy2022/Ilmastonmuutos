@@ -1,35 +1,45 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import V1V2 from "./components/V1V2";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Footer from "./components/Footer";
-import Profile from "./components/Profile";
-import Login from "./components/LogIn";
-import V3 from "./components/V3";
-import V6 from "./components/V6";
-import V7 from "./components/V7";
-import V8 from "./components/V8";
-import V9 from "./components/V9";
+import './App.css';
+import { Routes , Route} from 'react-router-dom';
+import { useState } from 'react';
+import N1 from "./components/N1";
+import N2 from "./components/N2";
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import Login from './components/LogIn';
+import Register from './components/Register';
+
 
 function App() {
+
+  const [userJwt, setuserJwt] = useState(null);
+
+  let authRoutes = <>
+    <Route path='/Login' element={<Login login={ (newJwt) => {
+      setuserJwt(newJwt);
+    }}/>}></Route>
+    <Route path='/Register' element={<Register/>}></Route>
+    </>
+
+  if(userJwt != null) {
+    authRoutes = <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+  } 
+
   return (
     <>
-      <Navbar />
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/v1" element={<V1V2 />}></Route>
-          <Route path="/v3" element={<V3 />}></Route>
-          <Route path="/v6" element={<V6 />}></Route>
-          <Route path="/v7" element={<V7 />}></Route>
-          <Route path="/v8" element={<V8 />}></Route>
-          <Route path="/v9" element={<V9 />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/Login" element={<Login />}></Route>
-        </Routes>
-      </div>
-      <Footer />
+    <Navbar userLoggedIn={userJwt != null}/>
+    <div className="App">
+      <Routes>
+      <Route path='/' element={<Home />}></Route>
+      <Route path="/N1" element={<N1 />}>
+        <Route path=":vId" ></Route>
+      </Route>
+      <Route path="/N2" element={<N2 />}>
+        <Route path=":vId" ></Route>
+      </Route>
+        { authRoutes}
+      </Routes>
+    </div>
     </>
   );
 }

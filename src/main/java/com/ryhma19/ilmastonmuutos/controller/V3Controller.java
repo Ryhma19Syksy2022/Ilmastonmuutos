@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ryhma19.ilmastonmuutos.data.V3;
 import com.ryhma19.ilmastonmuutos.repository.V3Repository;
 
+import com.ryhma19.ilmastonmuutos.data.V10;
+import com.ryhma19.ilmastonmuutos.repository.V10Repository;
+
 @RestController
 @RequestMapping("/api")
 public class V3Controller {
@@ -17,18 +20,17 @@ public class V3Controller {
     @Autowired
     V3Repository v3Repository;
 
-    @GetMapping("charts/v3")
-    public List<V3> getAllData() {
-        return v3Repository.findAll();
-    }
-
-    @GetMapping("/charts/v3/1")
+    @GetMapping("/charts/v3")
     public List<V3> getAnnualData() {
         return v3Repository.getAnnualData();
     }
 
-    @GetMapping("/charts/v3/2")
-    public List<V3> getMonthlyData() {
-        return v3Repository.getMonthlyData();
+    @Autowired
+    V10Repository v10Repository;
+
+    @GetMapping("/charts/v10")
+    public List<V10> getV10Data() {
+        return v10Repository.findAll();
     }
+
 }
