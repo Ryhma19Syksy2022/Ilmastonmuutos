@@ -4,18 +4,21 @@
 #Navbar{
   margin-bottom: 0!important;
 }
-footer{
-  position:fixed;
-  margin-left: 10px;
-  bottom: 0;
-  width: 50%;
-  height: 20px;
-  background-color: #fff;
-}
-.navbar{
-  background-color: darkblue;
-
-}
 .login{
   margin-right: 500px;
+}
+.Visual {
+  width: auto;
+  
+}
+
+.VisualList{
+padding-bottom: 10px;
+}
+
+.VisualDetails{
+
+
+
+
 }

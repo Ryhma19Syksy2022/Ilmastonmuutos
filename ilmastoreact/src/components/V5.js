@@ -56,7 +56,7 @@ const V5 = () => {
                 right: 20,
                 bottom: 20
             }
-        }
+        },
     }
 
     const data = {
@@ -78,7 +78,7 @@ const V5 = () => {
 
     return ( 
     <>
-    <Line options={options} data={data} />
+    <Line data={data} options={options} />
     <hr />
     <div>
             <p>
