@@ -35,7 +35,6 @@ const V5 = () => {
         },
         scales: {
             xAxis: {
-                ype: 'time',
                 time: {
                     unit: 'year'
                 },
