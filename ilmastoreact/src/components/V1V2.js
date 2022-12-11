@@ -125,18 +125,6 @@ const V1V2 = () => {
       xAxisKey: "time",
       yAxisKey: "value",
     },
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    tooltips: {
-      mode: "index",
-      intersect: false,
-    },
-    hover: {
-      mode: "nearest",
-      intersect: true,
-    },
     maintainAspectRatio: false,
     responsive: true,
     borderWidth: 1,
