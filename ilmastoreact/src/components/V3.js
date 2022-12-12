@@ -55,6 +55,11 @@ const V3 = () => {
 
     const options = {
         plugins: {
+            legend: {
+                labels: {
+                  usePointStyle: true,
+                },
+              },
             title: {
                 display: true,
                 text: "V3 Mauna Loa measurements combined with V4 ice core measurements",
@@ -64,6 +69,7 @@ const V3 = () => {
             line: {
                 pointRadius: 0,
                 pointHitRadius: 3,
+                pointStyle: "line",
             }
         },
         maintainAspectRatio: false,
@@ -150,12 +156,13 @@ const V3 = () => {
             },
             {
                 label: "V10",
-                pointRadius: 6,
+                pointRadius: 7,
                 backgroundColor: "red",
                 borderColor: "black",
                 type: "line",
                 showLine: false,
                 pointHitRadius: 8,
+                pointStyle: "circle",
                 tooltip: {
                     callbacks: {
                         label: function (context) {

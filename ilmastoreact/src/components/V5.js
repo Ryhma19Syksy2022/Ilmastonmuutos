@@ -17,6 +17,11 @@ const V5 = () => {
 
     const options = {
         plugins: {
+            legend: {
+                labels: {
+                  usePointStyle: true,
+                },
+              },
             title: {
                 display: true,
                 text: "V5 Vostok Ice Core CO2 measurements",
@@ -26,6 +31,7 @@ const V5 = () => {
             line: {
                 pointRadius: 0,
                 pointHitRadius: 8,
+                pointStyle: "line",
             },
         },
         maintainAspectRatio: false,
