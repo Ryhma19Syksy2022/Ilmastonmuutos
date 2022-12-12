@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Login from './components/LogIn';
 import Register from './components/Register';
+import Editor from './components/Editor';
 
 
 function App() {
@@ -22,7 +23,10 @@ function App() {
     </>
 
   if(userJwt != null) {
-    authRoutes = <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+    authRoutes = <>
+      <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+      <Route path='/Editor' element={<Editor token={userJwt}/>}></Route>
+      </>
   } 
 
   return (
