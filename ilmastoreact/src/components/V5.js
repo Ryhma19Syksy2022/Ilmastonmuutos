@@ -12,7 +12,6 @@ const V5 = () => {
         .get("/api/charts/v5")
         .then((response) => {
             setChartData(response.data);
-            console.log(response.data)
         });
     }, []);
 
@@ -29,6 +28,7 @@ const V5 = () => {
                 pointHitRadius: 8,
             },
         },
+        maintainAspectRatio: false,
         parsing: {
             xAxisKey: "time",
             yAxisKey: "value"
@@ -78,7 +78,9 @@ const V5 = () => {
 
     return ( 
     <>
+    <div style={{ width:"auto", height: "500px" }}>
     <Line data={data} options={options} />
+    </div>
     <hr />
     <div>
             <p>
