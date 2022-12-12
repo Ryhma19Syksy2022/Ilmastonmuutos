@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ryhma19.ilmastonmuutos.data.V1;
+import com.ryhma19.ilmastonmuutos.data.V10;
 import com.ryhma19.ilmastonmuutos.service.V1Service;
 
 @RestController
@@ -18,21 +19,9 @@ public class V1Controller {
     @Autowired
     V1Service v1Service;
 
-    @GetMapping("charts/v1")
-    public List<V1> getAllData() {
-        return v1Service.groupBy();
-    }
-
-    // @GetMapping("/charts/v1/1")
-    // public List<V1AnnualDTO> getAnnualData() {
-    // return v1Service.getAnnualData();
-    // }
-
     @GetMapping("charts/{datasetId}")
     public List<V1> getDataset(@PathVariable String datasetId) {
-
         return v1Service.getDataset(datasetId);
-
     }
 
     @GetMapping(value = "charts/v7/all")
@@ -40,10 +29,9 @@ public class V1Controller {
         return v1Service.getV7Data();
     }
 
-    // @GetMapping("/charts/v1/2")
-    // public List<V1MonthlyDTO> getMonthlyData() {
-    // return v1Service.getMonthlyData();
-
-    // }
+    @GetMapping("/charts/v7/v10")
+    public List<V10> getV10Data() {
+        return v1Service.getV10Data();
+    }
 
 }
