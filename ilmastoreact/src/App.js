@@ -8,10 +8,11 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Login from './components/LogIn';
 import Register from './components/Register';
-import CustomLayout from './components/CustomLayout';
 import CustomVisuals from './components/CustomVisuals';
+
 import V1V2 from './components/V1V2';
 import Editor from './components/Editor';
+
 
 
 function App() {
@@ -49,8 +50,8 @@ function App() {
         <Route path=":vId" ></Route>
       </Route>
 
-      <Route path="/CustomVisuals/*" element={<CustomVisuals visuals={V1V2}/>}>
-        <Route path=":cId"></Route>
+      <Route path="/CustomVisuals/*" element={<CustomVisuals/>}>
+        <Route path=":vId" element={ < CustomVisuals/>}></Route>
       </Route>
 
         { authRoutes}

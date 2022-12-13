@@ -48,6 +48,7 @@ public class CustomVisual {
         return this.layout;
     }
 
+
     public void setLayout(int Layout) {
         this.layout = Layout;
     }
