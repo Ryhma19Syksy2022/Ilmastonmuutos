@@ -14,12 +14,12 @@ export default function CustomVisuals() {
   const [showData, setShowData] = useState([]);
   const [showView, setView ] = useState([]);
 
-  const result = useParams();
-  console.log(result);
+  const visualId = useParams();
+  console.log(visualId);
 
   useEffect(() => {
     async function getVisual() {
-    const results = await axios.get('/api/customvisuals' );
+    const results = await axios.get('/api/customvisuals/' + visualId.vId );
       console.log(results);
       console.log(results.data);
       setShowData(results.data);
@@ -33,92 +33,39 @@ if(view == null){
     return <div>Something went wrong</div>
 }
 */
-  return (
+let v1 = false;
+let v3 = false;
+let v5 = false;
+let v6 = false;
+let v7 = false;
+let v8 = false;
+let v9 = false;
+if (showData.v1 === "1") { v1 = true}
+if (showData.v3 === "1") { v3 = true}
+if (showData.v5 === "1") { v5 = true}
+if (showData.v6 === "1") { v6 = true}
+if (showData.v7 === "1") { v7 = true}
+if (showData.v8 === "1") { v8 = true}
+if (showData.v9 === "1") { v9 = true}
+  
+return (
     <div>
 
-    <div>{showData.filter((c) => {
-        if (c.v1 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V1 />}</div>
-      ))}
-  </div>
+    <div>{v1 && <div>{< V1 />}</div> } </div>
 
-  <div>{showData.filter((c) => {
-        if (c.v3 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V3 />}</div>
-      ))}
-  </div>
+    <div>{v3 && <div>{< V3 />}</div> } </div>
 
-  <div>{showData.filter((c) => {
-        if (c.v5 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V5 />}</div>
-      ))}
-  </div>
+    <div>{v5 && <div>{< V5 />}</div> } </div>
 
-  <div>{showData.filter((c) => {
-        if (c.V6 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V6 />}</div>
-      ))}
-  </div>
+    <div>{v6 && <div>{< V6 />}</div> } </div>
 
-  <div>{showData.filter((c) => {
-        if (c.v7 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V7 />}</div>
-      ))}
-  </div>
+    <div>{v7 && <div>{< V7 />}</div> } </div>
+    
+    <div>{v8 && <div>{< V8 />}</div> } </div>
+    
+    <div>{v9 && <div>{< V9 />}</div> } </div>
 
-  <div>{showData.filter((c) => {
-        if (c.v8 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V8 />}</div>
-      ))}
-  </div>
-
-  <div>{showData.filter((c) => {
-        if (c.v9 === '0') {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .map(() => (
-        <div>{< V9 />}</div>
-      ))}
-  </div>
+  
     </div>
   );
 }
