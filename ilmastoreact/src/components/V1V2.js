@@ -1,58 +1,71 @@
 import React, { useState, useEffect } from "react";
+import { format, parse } from "date-fns";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 
 const V1V2 = () => {
-  const [globalAnnual, setGlobalAnnual] = useState([]);
-  const [globalMonthly, setGlobalMonthly] = useState([]);
-  const [northernAnnual, setNorthernAnnual] = useState([]);
-  const [northernMonthly, setNorthernMonthly] = useState([]);
-  const [southernAnnual, setSouthernAnnual] = useState([]);
-  const [southernMonthly, setSouthernMonthly] = useState([]);
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [annualData, setAnnualData] = useState([]);
   const [v2, setV2] = useState([]);
 
-  const getDatasetData = () => {
-    let endpoints = [
-      "/api/charts/v1-global-annual",
-      "/api/charts/v1-global-monthly",
-      "/api/charts/v1-northern-annual",
-      "/api/charts/v1-northern-monthly",
-      "/api/charts/v1-southern-annual",
-      "/api/charts/v1-southern-monthly",
-      "api/charts/v2",
-    ];
-    Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
-      ([
-        { data: globalAnnual },
-        { data: globalMonthly },
-        { data: northernAnnual },
-        { data: northernMonthly },
-        { data: southernAnnual },
-        { data: southernMonthly },
-        { data: v2 },
-      ]) => {
-        console.log({
-          globalAnnual,
-          globalMonthly,
-          northernAnnual,
-          northernMonthly,
-          southernAnnual,
-          southernMonthly,
-        });
-        setGlobalAnnual(globalAnnual);
-        setGlobalMonthly(globalMonthly);
-        setNorthernAnnual(northernAnnual);
-        setNorthernMonthly(northernMonthly);
-        setSouthernAnnual(southernAnnual);
-        setSouthernMonthly(southernMonthly);
-        setV2(v2);
-      }
-    );
-  };
-
   useEffect(() => {
-    getDatasetData();
+    async function getV1V2Data() {
+      const results = await axios.get("/api/charts/v1v2/all");
+      setAnnualData(
+        results.data.filter((a) => {
+          return a.datasetId.includes("annual");
+        })
+      );
+      setMonthlyData(
+        results.data.filter((a) => {
+          return a.datasetId.includes("monthly");
+        })
+      );
+      setV2(
+        results.data.filter((a) => {
+          return a.datasetId.includes("v2");
+        })
+      );
+    }
+    getV1V2Data();
   }, []);
+
+  const monthlyDataTimeFormatted = monthlyData.map((t) =>
+    format(parse(t.time, "yyyy-MM", new Date()), "MMM yyyy")
+  );
+
+   //deleting "old" time property
+  const monthlyDataWithoutTime = monthlyData.map(({ time, ...rest }) => {
+    return rest;
+  });
+
+  //reconstructing monthly data
+  const newMonthlyData = monthlyDataTimeFormatted.map((time, index) => {
+    return {
+      ...monthlyDataWithoutTime[index],
+      time: time,
+    };
+  });
+
+  const globalMonthly = newMonthlyData.filter(
+    (obj) => obj.datasetId === "v1-global-monthly"
+  );
+  const northernMonthly = newMonthlyData.filter(
+    (obj) => obj.datasetId === "v1-northern-monthly"
+  );
+  const southernMonthly = newMonthlyData.filter(
+    (obj) => obj.datasetId === "v1-southern-monthly"
+  );
+
+  const globalAnnual = annualData.filter(
+    (obj) => obj.datasetId === "v1-global-annual"
+  );
+  const northernAnnual = annualData.filter(
+    (obj) => obj.datasetId === "v1-northern-annual"
+  );
+  const southernAnnual = annualData.filter(
+    (obj) => obj.datasetId === "v1-southern-annual"
+  );
 
   const dataAnnual = {
     datasets: [
@@ -61,28 +74,28 @@ const V1V2 = () => {
         backgroundColor: "rgb(0,0,0)",
         borderColor: "rgb(0,0,0)",
         fill: false,
-        data: [...v2],
+        data: v2,
       },
       {
         label: "Global annual",
         backgroundColor: "rgb(249, 62, 110)",
         borderColor: "rgb(249, 62, 110)",
         fill: false,
-        data: [...globalAnnual],
+        data: globalAnnual,
       },
       {
         label: "Northern annual",
         backgroundColor: "rgb(16, 131, 167)",
         borderColor: "rgb(16, 131, 167)",
         fill: false,
-        data: [...northernAnnual],
+        data: northernAnnual,
       },
       {
         label: "Southern annual",
         backgroundColor: "rgb(247, 186, 8)",
         borderColor: "rgb(247, 186, 8)",
         fill: false,
-        data: [...southernAnnual],
+        data: southernAnnual,
       },
     ],
   };
@@ -90,32 +103,25 @@ const V1V2 = () => {
   const dataMonthly = {
     datasets: [
       {
-        label: "2,000-Year Northern Hemisphere Temperature Reconstruction",
-        backgroundColor: "rgb(0,0,0)",
-        borderColor: "rgb(0,0,0)",
-        fill: false,
-        data: [...v2],
-      },
-      {
         label: "Global monthly",
         backgroundColor: "rgb(249, 62, 110)",
         borderColor: "rgb(249, 62, 110)",
         fill: false,
-        data: [...globalMonthly],
+        data: globalMonthly,
       },
       {
         label: "Northern monthly",
         backgroundColor: "rgb(16, 131, 167)",
         borderColor: "rgb(16, 131, 167)",
         fill: false,
-        data: [...northernMonthly],
+        data: northernMonthly,
       },
       {
         label: "Southern monthly",
         backgroundColor: "rgb(247, 186, 8)",
         borderColor: "rgb(247, 186, 8)",
         fill: false,
-        data: [...southernMonthly],
+        data: southernMonthly,
       },
     ],
   };
@@ -137,14 +143,15 @@ const V1V2 = () => {
         title: {
           display: true,
           align: "end",
-          text: "deg c",
+          text: "temperature (ºC)",
         },
       },
       x: {
-        // type: "time",
-        // time: {
-        //   unit:"month"
-        // }
+        title: {
+          display: true,
+          align: "end",
+          text: "time",
+        },
       },
     },
     plugins: {
@@ -156,6 +163,7 @@ const V1V2 = () => {
       },
     },
   };
+
 
   const [graphState, updateState] = useState(true);
 
@@ -172,9 +180,11 @@ const V1V2 = () => {
         <button onClick={showAnnual}>Annual</button>
         <button onClick={showMonthly}>Monthly</button>
       </div>
-      <div style={{ width:"auto", height: "500px" }}>
+      <div style={{ width: "auto", height: "500px" }}>
         {graphState && <Line data={dataAnnual} options={options}></Line>}
-        {!graphState && <Line data={dataMonthly} options={options}></Line>}
+        {!graphState && (
+          <Line data={dataMonthly} options={options}></Line>
+        )}
       </div>
       <hr />
       <div>
