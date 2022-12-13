@@ -40,13 +40,13 @@ let v6 = false;
 let v7 = false;
 let v8 = false;
 let v9 = false;
-if (showData.v1 === "1") { v1 = true}
-if (showData.v3 === "1") { v3 = true}
-if (showData.v5 === "1") { v5 = true}
-if (showData.v6 === "1") { v6 = true}
-if (showData.v7 === "1") { v7 = true}
-if (showData.v8 === "1") { v8 = true}
-if (showData.v9 === "1") { v9 = true}
+if (showData.v1 === true) { v1 = true}
+if (showData.v3 === true) { v3 = true}
+if (showData.v5 === true) { v5 = true}
+if (showData.v6 === true) { v6 = true}
+if (showData.v7 === true) { v7 = true}
+if (showData.v8 === true) { v8 = true}
+if (showData.v9 === true) { v9 = true}
   
 return (
     <div>

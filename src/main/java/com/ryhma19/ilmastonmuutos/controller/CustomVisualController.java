@@ -34,6 +34,10 @@ public Optional<CustomVisual> getAllData(@PathVariable String visual_Id){
 
 }
 
+@Autowired
+customvisualService visualservice;
+
+
 @PostMapping("savevisual")
 public ResponseEntity<String> savevisual(@RequestParam String visual_id, @RequestParam String owner, @RequestParam Integer layout, @RequestParam Boolean v1, @RequestParam Boolean v3, @RequestParam Boolean v5, @RequestParam Boolean v6, 
                                         @RequestParam Boolean v7, @RequestParam Boolean v8, @RequestParam Boolean v9){
