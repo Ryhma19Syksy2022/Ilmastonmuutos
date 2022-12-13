@@ -9,8 +9,6 @@ import V7 from "./V7";
 
 function App() {
 
-
-
   return (
     <div className="Visual">
       <div className=" VisualList">

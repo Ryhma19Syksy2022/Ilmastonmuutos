@@ -10,4 +10,6 @@ public interface V1Repository extends JpaRepository<V1, Long> {
 
     List<V1> findByDatasetId(String datasetId);
 
+    List<V1> findByDatasetIdContaining(String datasetId);
+
 }

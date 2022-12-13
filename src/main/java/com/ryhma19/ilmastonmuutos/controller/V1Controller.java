@@ -18,10 +18,15 @@ public class V1Controller {
 
     @Autowired
     V1Service v1Service;
-
+    
     @GetMapping("charts/{datasetId}")
     public List<V1> getDataset(@PathVariable String datasetId) {
         return v1Service.getDataset(datasetId);
+    }
+
+    @GetMapping("charts/v1v2/all")
+    public List<V1> getV1V2Data() {
+        return v1Service.getV1V2Data();
     }
 
     @GetMapping(value = "charts/v7/all")

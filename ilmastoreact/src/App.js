@@ -8,6 +8,11 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Login from './components/LogIn';
 import Register from './components/Register';
+import CustomVisuals from './components/CustomVisuals';
+
+import V1V2 from './components/V1V2';
+import Editor from './components/Editor';
+
 
 
 function App() {
@@ -22,8 +27,14 @@ function App() {
     </>
 
   if(userJwt != null) {
-    authRoutes = <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+    authRoutes = <>
+      <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+      <Route path='/Editor' element={<Editor token={userJwt}/>}></Route>
+      </>
   } 
+  
+
+
 
   return (
     <>
@@ -31,13 +42,20 @@ function App() {
     <div className="App">
       <Routes>
       <Route path='/' element={<Home />}></Route>
+      
       <Route path="/N1" element={<N1 />}>
         <Route path=":vId" ></Route>
       </Route>
       <Route path="/N2" element={<N2 />}>
         <Route path=":vId" ></Route>
       </Route>
+
+      <Route path="/CustomVisuals/*" element={<CustomVisuals/>}>
+        <Route path=":vId" element={ < CustomVisuals/>}></Route>
+      </Route>
+
         { authRoutes}
+        
       </Routes>
     </div>
     </>
