@@ -11,6 +11,7 @@ import Register from './components/Register';
 import CustomLayout from './components/CustomLayout';
 import CustomVisuals from './components/CustomVisuals';
 import V1V2 from './components/V1V2';
+import Editor from './components/Editor';
 
 
 function App() {
@@ -25,7 +26,10 @@ function App() {
     </>
 
   if(userJwt != null) {
-    authRoutes = <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+    authRoutes = <>
+      <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
+      <Route path='/Editor' element={<Editor token={userJwt}/>}></Route>
+      </>
   } 
   
 

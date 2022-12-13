@@ -1,6 +1,6 @@
 import  React, { useState } from 'react';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Profile(props) {
     const navigate = useNavigate();
@@ -59,6 +59,9 @@ export default function Profile(props) {
     <div>
         {uname}<br/>
         <button onClick={() => logOut()}>log out</button><br/>
+        <div>
+            <Link classname="nav-link" to="/Editor">Create new visualization</Link>
+        </div>
         <form onSubmit={deactivateAcc} class="was-validated">
             <div class="mb-3">
                 <label for="pwd" class="form-label">Password:</label>
