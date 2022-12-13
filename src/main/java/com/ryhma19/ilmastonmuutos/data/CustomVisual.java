@@ -9,9 +9,8 @@ import javax.persistence.Table;
 
 public class CustomVisual {
     @Id
-    private int id;
     private String visual_Id;
-    private int Layout;
+    private int layout;
     private String v1;
     private String v3;
     private String v5;
@@ -23,15 +22,6 @@ public class CustomVisual {
     public CustomVisual(){
 
     }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getVisual_Id() {
         return this.visual_Id;
     }
@@ -41,11 +31,11 @@ public class CustomVisual {
     }
 
     public int getLayout() {
-        return this.Layout;
+        return this.layout;
     }
 
-    public void setLayout(int Layout) {
-        this.Layout = Layout;
+    public void setLayout(int layout) {
+        this.layout = layout;
     }
 
     public String getV1() {

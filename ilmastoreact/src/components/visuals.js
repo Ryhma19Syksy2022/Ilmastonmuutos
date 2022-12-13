@@ -12,27 +12,7 @@ import axios from "axios";
 
 export default function CustomVisuals() {
   const [showData, setShowData] = useState([]);
-  const [showView, setView ] = useState([]);
 
-  const result = useParams();
-  console.log(result);
-
-  useEffect(() => {
-    async function getVisual() {
-    const results = await axios.get('/api/customvisuals' );
-      console.log(results);
-      console.log(results.data);
-      setShowData(results.data);
-}
-    getVisual();
-  }, []);
-
-/*
-const view = showData.find(x => x.visual_Id === result.vId);
-if(view == null){
-    return <div>Something went wrong</div>
-}
-*/
   return (
     <div>
 
