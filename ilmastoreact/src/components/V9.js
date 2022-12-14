@@ -79,6 +79,10 @@ return (
     <p>By clicking the chart you can see further breakdown of the emissions of sectors</p>
     {graphState && <Doughnut data={sectorsData} options={{onClick:showSubSector}}></Doughnut>}
     {!graphState && <Doughnut data={subSectorsData} options={{onClick:showSector}}></Doughnut>}
+    <div>
+    <p>Description: https://ourworldindata.org/emissions-by-sector#co2-emissions-by-sector </p>
+    <p>Dataset: https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx</p>
+    </div>
   </div>
   </>
   );

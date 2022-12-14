@@ -24,9 +24,6 @@ export default function Navbar(){
         <li className="nav-item">
           <Link className="nav-link" to="/N2">Co<sub>2</sub> Emissions</Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/CustomVisuals"> CustomVisuals</Link>
-        </li>
         
         
       </ul>
