@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserAuthContext } from './Contexts';
 import { useNavigate } from 'react-router-dom';
 
-export default function Editor(props){
+export default function Editor(){
 
     const UserAuthContextValue = useContext(UserAuthContext);
 
@@ -12,18 +12,24 @@ export default function Editor(props){
 
     const navigate = useNavigate();
 
+    // haetaan käyttäjänimi palvelimelta ja tallennetaan se yllä alustettuihin konstantteihin. käyttäjänimi tulostetaan profiiliin ja sitä käytetään kutsuihin.
+
     useEffect(() => {
         async function loadPrivate() {
             const config = {
                 headers:{'Authorization': `Bearer ` + UserAuthContextValue.key},withCredentials: true}
           
-            const privateres = await axios.get('/api/private', config)
-                console.log('getting username')
+            const privateres = await axios.get('/api/private', config);
+                console.log('getting username');
+                console.log(privateres.data);
                 setowner(privateres.data);
         };
         loadPrivate();
       }, []);
 
+
+      // tilakone koosteen kasaamisen napille. 
+      
 
       let editorinterface = null;
       switch(saveState){
@@ -43,6 +49,10 @@ export default function Editor(props){
             editorinterface = <span>Failed to Save Visualization</span>
             break;
       }
+
+      // alla postauksen rakentamista lomakedatasta.
+      // Kommentteja ei keretty lisätä, joskin se olisi ollut suhteellisen vaivatonta lisäämällä kenttiä tietokantaan ja syötöt tähän.
+      // puuttuu myös validaatio ettei lähde tyhjää tietoa, oh well.
 
     const [visual_id, setVisual_id] = useState("");
     const [layout, setlayout] = useState(1)
@@ -79,6 +89,8 @@ export default function Editor(props){
             console.log("v8", v8);
             console.log("v9", v9);
             
+            // ja itse post call. Lopuksi käyttäjä siirretään profiilisivulle.
+
         try {
             const result = await axios.post('/api/savevisual', formData)
             console.log('saving visualization');

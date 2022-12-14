@@ -37,6 +37,12 @@ public class customvisualService {
         return c;
     }
 
+    /**
+     * 
+     * @param owner
+     * @return
+     */
+
     public List<CustomVisual> findvisuals(String owner){
         return repo.findByOwner(owner);
 

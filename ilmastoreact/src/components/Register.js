@@ -11,7 +11,8 @@ export default function Register(){
 
     const navigate = useNavigate();
     
-  
+  // rekisteröitymiskutsu rakennetaan lomakedatasta ja suoritetaan painaessa nappia.
+
     const newRegister = async (e) =>{
         e.preventDefault();
         setregisterState("processing");
@@ -34,9 +35,10 @@ export default function Register(){
             setTimeout(() => setregisterState("idle"), 2000);
         }
 
-        
     }
-        
+       
+    // rekisteröitymisen submit-napin tilakone.
+
     let registerinterface = null;
     switch(registerState){
         case "idle":

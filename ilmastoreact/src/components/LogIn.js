@@ -16,6 +16,8 @@ export default function Login(props){
     const navigate = useNavigate();
     
 
+    //loginin tilakone
+
     let logininterface = null;
     switch(loginState){
         case "idle":
@@ -35,6 +37,9 @@ export default function Login(props){
             break;
     }
   
+
+    // loginin lomakedatan prosessointi ja postauksen tekeminen.
+
     const newLogin = async (e) =>{
 
         e.preventDefault();
@@ -45,8 +50,9 @@ export default function Login(props){
             formData.append('pw', pw);
 
         try {
-            const result = await axios.post('/api/login', formData)
-            console.log('logging in')
+            const result = await axios.post('/api/login', formData);
+            console.log('logging in');
+            console.log(result);
             setloginState("loginSuccess");
             setTimeout(() => {
                 setloginState("idle");
@@ -65,25 +71,25 @@ export default function Login(props){
     return(
         
         <body>
-            <h3>LogIn To website</h3>
+            <h3>Login to Website</h3>
 
 
 
             <form onSubmit={newLogin} class="was-validated">
-                <div class="mb-3 mt-3">
+                <div className="mb-3 mt-3">
                     <label for="username" class="form-label">Username:</label>
                     <input type="username" class="form-control" id="username" placeholder="Enter username" name="username" value={uname} onChange={(e) => setuname(e.target.value)} required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     <label for="pwd" class="form-label">Password:</label>
                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" value={pw} onChange={(e) => setpw(e.target.value)} required/>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
+                    <div className="valid-feedback">Valid.</div>
+                    <div className="invalid-feedback">Please fill out this field.</div>
                 </div>
                 <div class="form-check mb-3">
-                    <Link classname="nav-link" to="/Register">a New User?</Link>
+                    <Link className="nav-link" to="/Register">a New User?</Link>
                 </div>
                 {logininterface}
             </form>
