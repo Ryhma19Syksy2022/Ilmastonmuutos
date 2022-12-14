@@ -31,7 +31,7 @@ export default function Profile() {
       }, []);
 
       // haetaan tallennetut koosteet arrayna käyttäjänimen perusteella palvelimelta, kun painetaan nappia.
-      // koosteiden tunnistekenttä visual_id tulostetaan läjään.
+      // koosteiden tunnistekenttä visual_id tulostetaan läjään linkkeinä, jotka johtavat eri koosteisiin, ei toimi verkossa hostattuna.
 
     const loadVisual = async () =>{
         const visualres = await axios.get("/api/uservisuals", {params: {owner: uname}});
@@ -78,14 +78,17 @@ export default function Profile() {
     
     return(
     <div>
-        {uname}<br/>
+        <div>
+            <span>Logged in as: {uname}</span>
+        </div>
+        
         <div>
             <button onClick={loadVisual}>Show Saved Visuals</button>
             <table>
                     <tbody>
                         {uservisuals.map(t =>
                             <tr>
-                                <td>{t.visual_id}</td>
+                                <td><a href={`/CustomVisuals/${t.visual_id}`}>{t.visual_id}</a></td>
                             </tr>
                         )}
                     </tbody>
