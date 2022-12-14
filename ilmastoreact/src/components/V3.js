@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import axios from "axios";
@@ -6,7 +6,6 @@ import "chart.js/auto";
 
 
 const V3 = () => {
-    const chartRef = useRef(null);
     const [annualData, setannualData] = useState([]);
     const [dssData, setdssData] = useState([]);
     const [de08Data, setde08Data] = useState([]);
@@ -30,20 +29,18 @@ const V3 = () => {
         });
     }, []);
 
-    const chart = chartRef.current;
-
     function findValueAt(x) {
         let year = 2022 - x.time;
-        let data = chart.data.datasets[0].data;
+        let data = dssData;
         let index = data.findIndex(o => o.time >= year);
         if (index === -1) {
-            data = chart.data.datasets[1].data;
+            data = de08Data;
             index = data.findIndex(o => o.time >= year);
             if (index === -1) {
-                data = chart.data.datasets[2].data;
+                data = de082Data;
                 index = data.findIndex(o => o.time >= year);
                 if (index === -1) {
-                    data = chart.data.datasets[3].data;
+                    data = annualData;
                     index = data.findIndex(o => o.time >= year);
                 }
             }
@@ -58,6 +55,11 @@ const V3 = () => {
 
     const options = {
         plugins: {
+            legend: {
+                labels: {
+                  usePointStyle: true,
+                },
+              },
             title: {
                 display: true,
                 text: "V3 Mauna Loa measurements combined with V4 ice core measurements",
@@ -67,8 +69,10 @@ const V3 = () => {
             line: {
                 pointRadius: 0,
                 pointHitRadius: 3,
+                pointStyle: "line",
             }
         },
+        maintainAspectRatio: false,
         parsing: {
             xAxisKey: "time",
             yAxisKey: "value"
@@ -140,24 +144,6 @@ const V3 = () => {
                 data: annualData
             },
             {
-                label: "V10",
-                pointRadius: 6,
-                backgroundColor: "red",
-                borderColor: "black",
-                type: "line",
-                showLine: false,
-                pointHitRadius: 8,
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            let label = context.raw.description
-                            return label
-                        }
-                    },
-                },
-                data: v10Data.map((a) => findValueAt(a)).filter(a => { return a !== undefined })
-            },
-            {
                 label: "Mauna Loa Monthly CO2 concentration",
                 backgroundColor: "rgb(74, 21, 35)",
                 borderColor: "rgb(74, 21, 35)",
@@ -168,13 +154,34 @@ const V3 = () => {
                 type: "line",
                 data: monthlyData,
             },
+            {
+                label: "V10",
+                pointRadius: 7,
+                backgroundColor: "red",
+                borderColor: "black",
+                type: "line",
+                showLine: false,
+                pointHitRadius: 8,
+                pointStyle: "circle",
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.raw.description
+                            return label
+                        }
+                    },
+                },
+                data: v10Data.map((a) => findValueAt(a)).filter(a => { return a !== undefined })
+            },
         ]
 
     }
 
     return (
     <>
-    <Line ref={chartRef} options={options} data={data} />
+    <div style={{ width:"auto", height: "500px" }}>
+    <Line options={options} data={data} />
+    </div>
     <hr />
     <div>
         <p>

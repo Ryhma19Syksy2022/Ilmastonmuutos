@@ -12,12 +12,16 @@ const V5 = () => {
         .get("/api/charts/v5")
         .then((response) => {
             setChartData(response.data);
-            console.log(response.data)
         });
     }, []);
 
     const options = {
         plugins: {
+            legend: {
+                labels: {
+                  usePointStyle: true,
+                },
+              },
             title: {
                 display: true,
                 text: "V5 Vostok Ice Core CO2 measurements",
@@ -27,15 +31,16 @@ const V5 = () => {
             line: {
                 pointRadius: 0,
                 pointHitRadius: 8,
+                pointStyle: "line",
             },
         },
+        maintainAspectRatio: false,
         parsing: {
             xAxisKey: "time",
             yAxisKey: "value"
         },
         scales: {
             xAxis: {
-                ype: 'time',
                 time: {
                     unit: 'year'
                 },
@@ -79,7 +84,9 @@ const V5 = () => {
 
     return ( 
     <>
+    <div style={{ width:"auto", height: "500px" }}>
     <Line data={data} options={options} />
+    </div>
     <hr />
     <div>
             <p>
