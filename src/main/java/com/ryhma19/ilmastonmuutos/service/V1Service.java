@@ -29,6 +29,13 @@ public class V1Service {
         return v1Repository.findByDatasetId(datasetId);
     }
 
+    public List<V1> getV1V2Data() {
+        List<V1> v1V2Data = new ArrayList<>();
+        v1V2Data.addAll(v1Repository.findByDatasetIdContaining("v1"));
+        v1V2Data.addAll(v1Repository.findByDatasetIdContaining("v2"));
+        return v1V2Data;
+    }
+
     public List<V1> getV7Data() {
         List<V1> v7Data = new ArrayList<>();
         v7Data.addAll(v1Repository.findByDatasetId("v7-GAST"));
