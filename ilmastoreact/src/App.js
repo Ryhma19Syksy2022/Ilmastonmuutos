@@ -12,23 +12,38 @@ import CustomLayout from './components/CustomLayout';
 import CustomVisuals from './components/CustomVisuals';
 import V1V2 from './components/V1V2';
 import Editor from './components/Editor';
+import { UserAuthContext } from './components/Contexts';
 
+const storedAuthKey = window.localStorage.getItem('authKey');
 
 function App() {
 
-  const [userJwt, setuserJwt] = useState(null);
+  const initialAuthKey ={
+    key: storedAuthKey,
+    login: (newAuthValue) => {
+      const newAuthKey = {...userAuthKey,
+        key: newAuthValue
+      };
+    window.localStorage.setItem('authKey', newAuthValue);
+    setuserAuthKey(newAuthKey);
+    },
+    logout: () => {
+      window.localStorage.removeItem('authKey');
+      setuserAuthKey({...initialAuthKey});
+    }
+  };
+
+  const [userAuthKey, setuserAuthKey] = useState({...initialAuthKey});
 
   let authRoutes = <>
-    <Route path='/Login' element={<Login login={ (newJwt) => {
-      setuserJwt(newJwt);
-    }}/>}></Route>
+    <Route path='/Login' element={<Login/>}></Route>
     <Route path='/Register' element={<Register/>}></Route>
     </>
 
-  if(userJwt != null) {
+  if(userAuthKey.key) {
     authRoutes = <>
-      <Route path='/Profile' element={<Profile token={userJwt} logout={() => setuserJwt(null)}/>}></Route>
-      <Route path='/Editor' element={<Editor token={userJwt}/>}></Route>
+      <Route path='/Profile' element={<Profile/>}></Route>
+      <Route path='/Editor' element={<Editor/>}></Route>
       </>
   } 
   
@@ -36,28 +51,36 @@ function App() {
 
 
   return (
-    <>
-    <Navbar userLoggedIn={userJwt != null}/>
-    <div className="App">
-      <Routes>
-      <Route path='/' element={<Home />}></Route>
+    <UserAuthContext.Provider value={userAuthKey}>
+    
+      <UserAuthContext.Consumer>
+        {value => (<div>Auth Status: {value.key != null ? "Logged in":"Not logged in"}</div>)}
+      </UserAuthContext.Consumer>
+
+      <Navbar/>
+      <div className="App">
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
       
-      <Route path="/N1" element={<N1 />}>
-        <Route path=":vId" ></Route>
-      </Route>
-      <Route path="/N2" element={<N2 />}>
-        <Route path=":vId" ></Route>
-      </Route>
+          <Route path="/N1" element={<N1 />}>
+            <Route path=":vId" ></Route>
+          </Route>
+          
+          <Route path="/N2" element={<N2 />}>
+            <Route path=":vId" ></Route>
+          </Route>
 
-      <Route path="/CustomVisuals/*" element={<CustomVisuals visuals={V1V2}/>}>
-        <Route path=":cId"></Route>
-      </Route>
+          <Route path="/CustomVisuals/*" element={<CustomVisuals visuals={V1V2}/>}>
+            <Route path=":cId"></Route>
+          </Route>
 
-        { authRoutes}
+          {authRoutes}
         
-      </Routes>
-    </div>
-    </>
+        </Routes>
+      </div>
+
+    </UserAuthContext.Provider>
+    
   );
 }
 

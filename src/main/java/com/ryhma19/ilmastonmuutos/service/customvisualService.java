@@ -1,5 +1,7 @@
 package com.ryhma19.ilmastonmuutos.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +36,10 @@ public class customvisualService {
         repo.save(c);
         return c;
     }
+
+    public List<CustomVisual> findvisuals(String owner){
+        return repo.findByOwner(owner);
+
+    }
+
 }

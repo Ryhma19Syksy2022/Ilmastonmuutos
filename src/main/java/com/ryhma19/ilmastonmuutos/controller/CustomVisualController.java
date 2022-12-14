@@ -1,6 +1,7 @@
 package com.ryhma19.ilmastonmuutos.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +32,25 @@ public List<CustomVisual>getAllData(){
 }
 
 @PostMapping("savevisual")
-public ResponseEntity<String> savevisual(@RequestParam String visual_id, @RequestParam String owner, @RequestParam Integer layout, @RequestParam Boolean v1, @RequestParam Boolean v3, @RequestParam Boolean v5, @RequestParam Boolean v6, 
-                                        @RequestParam Boolean v7, @RequestParam Boolean v8, @RequestParam Boolean v9){
-    CustomVisual c = visualservice.savevisual(visual_id, owner, layout, v1, v3, v5, v6, v7, v8, v9);
-    return new ResponseEntity<>(c.visual_id, HttpStatus.OK);
-    }
+public ResponseEntity<String> savevisual(@RequestParam String visual_id, 
+                                            @RequestParam String owner, 
+                                            @RequestParam Integer layout, 
+                                            @RequestParam Boolean v1, 
+                                            @RequestParam Boolean v3, 
+                                            @RequestParam Boolean v5, 
+                                            @RequestParam Boolean v6, 
+                                            @RequestParam Boolean v7, 
+                                            @RequestParam Boolean v8, 
+                                            @RequestParam Boolean v9){
+
+CustomVisual c = visualservice.savevisual(visual_id, owner, layout, v1, v3, v5, v6, v7, v8, v9);
+return new ResponseEntity<>(c.visual_id, HttpStatus.OK);
+}
+
+@GetMapping("uservisuals")
+public List<CustomVisual> findvisuals(@RequestParam String owner){
+    return visualservice.findvisuals(owner);
+}
 
 }
 

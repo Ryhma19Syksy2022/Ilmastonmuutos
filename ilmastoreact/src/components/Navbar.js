@@ -1,27 +1,11 @@
-import  React, { useState } from 'react';
+import  React, { useContext, useState } from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
+import { UserAuthContext } from './Contexts';
 
-export default function Navbar(props){
+export default function Navbar(){
 
-  const [privateData, setprivateData] = useState([]);
-
-  try {
-
-
-    const config = {
-        headers:{'Authorization': `Bearer ${props.token}`},withCredentials: true}
-  
-    axios.get('/api/private', config)
-         .then((response) => {
-            console.log(response.data)
-            setprivateData(response.data);
-         });
-
-         
-  } catch (error) {
-    console.error(error);
-  }
+  const userAuthContextValue = useContext(UserAuthContext);
 
   return(
 <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -49,7 +33,7 @@ export default function Navbar(props){
       </ul>
       <div classname="Login">
         
-        {props.userLoggedIn ? <Link classname="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
+        {userAuthContextValue.key !=null ? <Link classname="nav-link" to="/Profile">Profile</Link> : <Link classname="nav-link" to="/LogIn">Sign in</Link> }
         
       </div>
     </div>

@@ -1,32 +1,62 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { useState } from "react";
+import { UserAuthContext } from './Contexts';
 
 
 export default function Login(props){
 
+    const UserAuthContextValue = useContext(UserAuthContext);
+
     const [uname, setuname] = useState("");
     const [pw, setpw] = useState("");
+    const [loginState, setloginState] = useState("idle");
+
     const navigate = useNavigate();
     
+
+    let logininterface = null;
+    switch(loginState){
+        case "idle":
+            logininterface = <button type="submit">Login to Account</button>
+            break;
+
+        case "processing":
+            logininterface = <span>Just a Second...</span>
+            break;
+
+        case "registerSuccess":
+            logininterface = <span>Login Successfull</span>
+            break;
+
+        case "registerFailure":
+            logininterface = <span>Login Failed</span>
+            break;
+    }
   
     const newLogin = async (e) =>{
+
         e.preventDefault();
+        setloginState("processing");
+
         const formData = new FormData();
             formData.append('uname', uname);
             formData.append('pw', pw);
 
         try {
             const result = await axios.post('/api/login', formData)
-            console.log('logging in')                          
-            console.log(result);
-            const receivedJWT = (result.data);
-            props.login(receivedJWT);
-
-            navigate('/profile', {replace: true});
+            console.log('logging in')
+            setloginState("loginSuccess");
+            setTimeout(() => {
+                setloginState("idle");
+                UserAuthContextValue.login(result.data);
+                navigate('/', {replace: true});
+            }, 2000);
         } catch (error) {
             console.error(error);
+            setloginState("loginFailure");
+            setTimeout(() =>  setloginState("idle"), 2000);
         }
 
         
@@ -55,7 +85,7 @@ export default function Login(props){
                 <div class="form-check mb-3">
                     <Link classname="nav-link" to="/Register">a New User?</Link>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                {logininterface}
             </form>
 
         </body>
