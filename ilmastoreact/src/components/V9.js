@@ -3,6 +3,9 @@ import {Doughnut} from 'react-chartjs-2';
 import axios from "axios";
 import "chart.js/auto";
 
+//Cretes V9 dougnut chart using axios api call to get data from db
+
+ 
 const V9 =() => {
 const [sectorData,setsectorData] = useState([]);
 const [graphState,updateState] = useState(true);
@@ -17,6 +20,7 @@ useEffect(() => {
     getSectors();
 },[])
 
+//Cretes data for sector chart
 const sectorsData = {
     labels: sectorData.slice(0,4).map((c) => c.sectors),
     datasets: [
@@ -36,7 +40,7 @@ const sectorsData = {
       },
     ]
 }
-
+    // Creates data for sub-sector chart
 const subSectorsData = {
     labels: sectorData.slice(5,21).map((c) => c.subSectors),
     datasets:[
@@ -56,6 +60,7 @@ const subSectorsData = {
     }]
 }
 
+// Updates chart allowing to change from sectors to sub-sectors
 function showSector(event, array) {
     if(array[0]){
         updateState(true);

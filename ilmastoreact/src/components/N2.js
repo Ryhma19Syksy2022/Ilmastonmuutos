@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import V8 from "./V8";
 import V9 from "./V9";
 
-
+// Creates dropdown menu for co2 emission page and allows user to toggle between v8-v9 graphs
 
 function App() {
   return (

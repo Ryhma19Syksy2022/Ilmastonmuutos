@@ -51,7 +51,7 @@ public class securityController {
 
     @PostMapping("deactivate")
     public ResponseEntity<String> deactivate(@RequestParam String uname, @RequestParam String pw){
-        user u = secService.deactivate(uname, pw);
+        secService.deactivate(uname, pw);
         return new ResponseEntity<>("account has been deactivated", HttpStatus.OK);
     }
     

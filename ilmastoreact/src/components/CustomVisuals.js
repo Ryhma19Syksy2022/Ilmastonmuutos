@@ -49,21 +49,25 @@ if (showData.v8 === true) { v8 = true}
 if (showData.v9 === true) { v9 = true}
   
 return (
-    <div>
+    <div className="custom">
 
+    <div className="v1">
     <div>{v1 && <div>{< V1 />}</div> } </div>
 
     <div>{v3 && <div>{< V3 />}</div> } </div>
+    </div>
 
     <div>{v5 && <div>{< V5 />}</div> } </div>
 
     <div>{v6 && <div>{< V6 />}</div> } </div>
 
+<div className="v1">
     <div>{v7 && <div>{< V7 />}</div> } </div>
     
     <div>{v8 && <div>{< V8 />}</div> } </div>
+    </div>
     
-    <div>{v9 && <div>{< V9 />}</div> } </div>
+    <div className="v9">{v9 && <div>{< V9 />}</div> } </div>
 
   
     </div>
