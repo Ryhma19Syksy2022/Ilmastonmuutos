@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuthContext } from './Contexts';
 
-export default function Profile(props) {
+export default function Profile() {
 
     const UserAuthContextValue = useContext(UserAuthContext);
 
@@ -13,26 +13,36 @@ export default function Profile(props) {
     const navigate = useNavigate();
     
 
+    // haetaan käyttäjänimi palvelimelta ja tallennetaan se yllä alustettuihin konstantteihin. 
+    // käyttäjänimi tulostetaan profiiliin ja sitä käytetään kutsuihin.
+
+
     useEffect(() => {
         async function loadPrivate() {
                 const config = {
                     headers:{'Authorization': `Bearer ` + UserAuthContextValue.key},withCredentials: true}
               
-                const privateres = await axios.get('/api/private', config)
-                    console.log('getting username')
+                const privateres = await axios.get('/api/private', config);
+                    console.log('Getting username');
+                    console.log(privateres);
                     setuname(privateres.data);
         };
         loadPrivate();
       }, []);
 
+      // haetaan tallennetut koosteet arrayna käyttäjänimen perusteella palvelimelta, kun painetaan nappia.
+      // koosteiden tunnistekenttä visual_id tulostetaan läjään.
+
     const loadVisual = async () =>{
         const visualres = await axios.get("/api/uservisuals", {params: {owner: uname}});
-            console.log(visualres.data);
-            console.log('getting saved visuals')
+            console.log('Getting saved visuals');
+            console.log(visualres);
             setuservisuals(visualres.data);
             
     }
 
+    // tilin poiston funktio. Kun salasanakenttään syötetään salasana, voidaan käyttäjätunnus poistaa.
+    // huom! ei poista koosteita. tulis clutteria oikeessa käytössä.
 
     const [pw, setpw] = useState("");        
       
@@ -42,24 +52,24 @@ export default function Profile(props) {
             formData.append('uname', uname);
             formData.append('pw', pw);
     
-            
         try {
             const deactres = await axios.post('/api/deactivate', formData);
-            console.log('deactivating account')                          
-            console.log(deactres.data);
+            console.log('Deactivating account');
+            console.log(deactres);
                 
             UserAuthContextValue.logout();
-            console.log('account deactivated');
+            console.log('Account deactivated');
             navigate('/', {replace: true});
         } catch (error) {
             console.error(error);
         }
-
-        
     }
+
+    // uloskirjautumisen funktio siirtää käyttäjän homeeseen ja laittaa kutsun appiin poistamaan lokaalista tokenin
 
     const logOutUser = async (e) =>{
         e.preventDefault();
+        console.log('Logging out user');
         UserAuthContextValue.logout();
         navigate('/', {replace: true});
 
@@ -70,7 +80,7 @@ export default function Profile(props) {
     <div>
         {uname}<br/>
         <div>
-            <button onClick={loadVisual}>show saved visuals</button>
+            <button onClick={loadVisual}>Show Saved Visuals</button>
             <table>
                     <tbody>
                         {uservisuals.map(t =>
@@ -80,10 +90,10 @@ export default function Profile(props) {
                         )}
                     </tbody>
                 </table>
-            <Link classname="nav-link" to="/Editor">Create new visualization</Link>
+            <Link classname="nav-link" to="/Editor">Create new Visualization</Link>
         </div>
         <div>
-            <button onClick={logOutUser}>log out</button>
+            <button onClick={logOutUser}>Logout</button>
             <br/>
         </div>
         
@@ -98,7 +108,7 @@ export default function Profile(props) {
                 <div class="valid-feedback">Valid.</div>
                 <div class="invalid-feedback">Please fill out this field.</div>
             </div>
-            <button type="submit" class="btn btn-primary">Deactivate account</button>
+            <button type="submit" class="btn btn-primary">Deactivate Account</button>
         </form>
     </div>
     );
