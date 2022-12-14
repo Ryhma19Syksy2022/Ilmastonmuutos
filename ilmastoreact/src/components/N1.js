@@ -7,6 +7,10 @@ import V6 from "./V6";
 import V5 from "./V5";
 import V7 from "./V7";
 
+
+
+// Creates dropdown menu for temperatures and CO2 page and allows user to toggle between v1-v7 graphs
+
 function App() {
 
   return (
