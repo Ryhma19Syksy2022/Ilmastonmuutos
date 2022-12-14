@@ -9,14 +9,14 @@ import Profile from './components/Profile';
 import Login from './components/LogIn';
 import Register from './components/Register';
 import CustomVisuals from './components/CustomVisuals';
-
-import V1V2 from './components/V1V2';
 import Editor from './components/Editor';
 import { UserAuthContext } from './components/Contexts';
 
 const storedAuthKey = window.localStorage.getItem('authKey');
 
 function App() {
+
+  // autorisaatio, kontekstit, login, logout ja tokenin tallennus paikallismuistiin
 
   const initialAuthKey ={
     key: storedAuthKey,
@@ -34,6 +34,8 @@ function App() {
   };
 
   const [userAuthKey, setuserAuthKey] = useState({...initialAuthKey});
+
+  // routejen muuttaminen riippuen onko käyttäjä kirjautunut sisään
 
   let authRoutes = <>
     <Route path='/Login' element={<Login/>}></Route>
