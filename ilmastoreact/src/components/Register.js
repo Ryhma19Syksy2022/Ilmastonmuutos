@@ -7,27 +7,54 @@ export default function Register(){
 
     const [uname, setuname] = useState("");
     const [pw, setpw] = useState("");
+    const [registerState, setregisterState] = useState("idle");
+
     const navigate = useNavigate();
     
   
     const newRegister = async (e) =>{
         e.preventDefault();
+        setregisterState("processing");
+
         const formData = new FormData();
             formData.append('uname', uname);
             formData.append('pw', pw);
 
         try {
-            const result = await axios.post('/api/register', formData)
+            const result = await axios.post('/api/register', formData);
             console.log(result);
-            navigate('/Login', {replace: true});
+            setregisterState("registerSuccess");
+            setTimeout(() => {
+                setregisterState("idle");
+                navigate('/Login', {replace: true});
+            }, 2000);
         } catch (error) {
             console.error(error);
+            setregisterState("registerFailure");
+            setTimeout(() => setregisterState("idle"), 2000);
         }
 
         
     }
         
-    
+    let registerinterface = null;
+    switch(registerState){
+        case "idle":
+            registerinterface = <button type="submit">Register account</button>
+            break;
+
+        case "processing":
+            registerinterface = <span>Just a second...</span>
+            break;
+
+        case "registerSuccess":
+            registerinterface = <span>Register account successful</span>
+            break;
+
+        case "registerFailure":
+            registerinterface = <span>Failed to register account</span>
+            break;
+    }
 
     return(
         <body>
@@ -46,7 +73,7 @@ export default function Register(){
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Register Account</button>
+                {registerinterface}
             </form>
 
         </body>

@@ -1,37 +1,38 @@
-import  React, { useState } from 'react';
+import  React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
+import { UserAuthContext } from './Contexts';
 
 export default function Profile(props) {
-    const navigate = useNavigate();
+
+    const UserAuthContextValue = useContext(UserAuthContext);
 
     const [uname, setuname] = useState("");
+    const [uservisuals, setuservisuals] = useState([]);
 
-    try {
-        const config = {
-            headers:{'Authorization': `Bearer ${props.token}`},withCredentials: true}
-      
-        axios.get('/api/private', config)
-             .then((response) => {
-                console.log('gettingdata')
-                console.log(props.token)
-                console.log(response.data)
-                setuname(response.data);
-             });
+    const navigate = useNavigate();
     
-             
-    } catch (error) {
-        console.error(error);
+
+    useEffect(() => {
+        async function loadPrivate() {
+                const config = {
+                    headers:{'Authorization': `Bearer ` + UserAuthContextValue.key},withCredentials: true}
+              
+                const privateres = await axios.get('/api/private', config)
+                    console.log('getting username')
+                    setuname(privateres.data);
+        };
+        loadPrivate();
+      }, []);
+
+    const loadVisual = async () =>{
+        const visualres = await axios.get("/api/uservisuals", {params: {owner: uname}});
+            console.log(visualres.data);
+            console.log('getting saved visuals')
+            setuservisuals(visualres.data);
+            
     }
 
-    
-
-    const logOut = async () =>{
-        props.logout();
-        console.log('logging out')
-        navigate('/', {replace: true});
-        
-        }
 
     const [pw, setpw] = useState("");        
       
@@ -41,26 +42,54 @@ export default function Profile(props) {
             formData.append('uname', uname);
             formData.append('pw', pw);
     
+            
         try {
-            const result = await axios.post('/api/deactivate', formData)
+            const deactres = await axios.post('/api/deactivate', formData);
             console.log('deactivating account')                          
-            console.log(result);
+            console.log(deactres.data);
                 
-            props.logout();
-            console.log('account deactivated')
+            UserAuthContextValue.logout();
+            console.log('account deactivated');
             navigate('/', {replace: true});
         } catch (error) {
             console.error(error);
         }
+
+        
+    }
+
+    const logOutUser = async (e) =>{
+        e.preventDefault();
+        UserAuthContextValue.logout();
+        navigate('/', {replace: true});
+
     }
          
     
     return(
     <div>
         {uname}<br/>
-        <button onClick={() => logOut()}>log out</button><br/>
         <div>
+            <button onClick={loadVisual}>show saved visuals</button>
+            <table>
+                    <tbody>
+                        {uservisuals.map(t =>
+                            <tr>
+                                <td>{t.visual_id}</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             <Link classname="nav-link" to="/Editor">Create new visualization</Link>
+        </div>
+        <div>
+            <button onClick={logOutUser}>log out</button>
+            <br/>
+        </div>
+        
+        
+        <div>
+            
         </div>
         <form onSubmit={deactivateAcc} class="was-validated">
             <div class="mb-3">
