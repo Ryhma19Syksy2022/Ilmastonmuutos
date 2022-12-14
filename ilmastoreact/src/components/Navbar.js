@@ -41,9 +41,6 @@ export default function Navbar(props){
         <li className="nav-item">
           <Link className="nav-link" to="/N2">Co<sub>2</sub> emissions</Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/CustomVisuals"> CustomVisuals</Link>
-        </li>
         
         
       </ul>
